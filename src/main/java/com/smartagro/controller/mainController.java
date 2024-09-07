@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smartagro.model.User;
+import com.smartagro.model.newDevices;
+import com.smartagro.repository.newDevicesRepository;
 import com.smartagro.repository.userRepository;
 
 import jakarta.servlet.annotation.MultipartConfig;
@@ -29,6 +31,10 @@ import jakarta.servlet.http.HttpSession;
 public class mainController {
 	@Autowired
 	private userRepository uRepo;
+	
+	@Autowired
+	private newDevicesRepository ndRepo;
+	
 	
 	
 	@GetMapping("/")
@@ -104,6 +110,12 @@ public class mainController {
 	
 	@GetMapping("/addDevice")
 	public String addDevice() { 
+		return "superAdmin/add.html";
+	}
+	
+	@PostMapping("")
+	public String addDeviceData(@ModelAttribute newDevices nd) {
+		ndRepo.save(nd);
 		return "superAdmin/add.html";
 	}
 	

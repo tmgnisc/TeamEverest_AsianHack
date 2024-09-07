@@ -90,7 +90,6 @@
           </div>
           <!-- Sidebar toggle button -->
           <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
-            <!-- Use a more intuitive icon -->
             <i class="fas fa-bars"></i>
           </button>
         </div>
@@ -100,15 +99,15 @@
             <!-- Sidebar item with responsive text -->
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-home mr-2"></i>
-              <span><a href="adminDashboard.html">Home</a></span>
+              <span><a href="/superAdmin">Home</a></span>
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
-              <span><a href="map.html">View Devices</a></span>
+              <span><a href="/viewDevice">View Devices</a></span>
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
-              <span><a href="add.html">Add Device</a></span>
+              <span><a href="/addDevice">Add Device</a></span>
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
@@ -116,11 +115,11 @@
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
-              <span><a href="adduser.html">Add User</a></span>
+              <span><a href="/addUser">Add User</a></span>
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
-              <span><a href="notice.html">Notice</a></span>
+              <span><a href="/notice">Notice</a></span>
             </li>
             
           </ul>
@@ -135,20 +134,22 @@
 
         <!-- Form for entering Dustbin ID -->
         <div id="formContainer">
-          <form id="dustbinForm">
+          <form id="dustbinForm" action="/addDevice" method="post">
             <input
               type="text"
               id="latitudeInput"
               placeholder="Latitude"
+              name = "latitude"
               readonly
             />
             <input
               type="text"
               id="longitudeInput"
               placeholder="Longitude"
+              name = "longitude"
               readonly
             />
-            <input type="text" id="dustbinIdInput" placeholder="Device ID" />
+            <input type="text" id="dustbinIdInput" placeholder="Device ID" name="deviceId" />
             <button type="submit" id="confirmButton">Confirm</button>
           </form>
         </div>
