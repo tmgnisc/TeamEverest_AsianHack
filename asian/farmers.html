@@ -31,12 +31,14 @@
     }
     .chart-container {
       display: flex;
-      justify-content: center; /* Center the chart horizontally */
-      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
     }
     .chart-item {
-      width: 300px; /* Adjust as needed */
-      height: 300px; /* Adjust as needed */
+      flex: 1;
+      max-width: 100%;
+      height: 300px;
     }
     .summary {
       margin-bottom: 20px;
@@ -56,10 +58,6 @@
         <div class="flex items-center cursor-pointer">
           <span class="text-lg font-semibold">Farmer Panel</span>
         </div>
-        <!-- Sidebar toggle button -->
-        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
-          <i class="fas fa-bars"></i>
-        </button>
       </div>
       <!-- Sidebar Items -->
       <nav class="flex-grow hidden lg:block">
@@ -67,22 +65,6 @@
           <li class="px-4 py-2 flex items-center active">
             <i class="fas fa-home mr-2"></i>
             <span><a href="farmers.html" class="text-blue-100">Dashboard</a></span>
-          </li>
-          <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            <span><a href="complaint.html" class="text-blue-100">Register a Complaint</a></span>
-          </li>
-          <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-trash mr-2"></i>
-            <span><a href="removedev.html" class="text-blue-100">Request Device Removal</a></span>
-          </li>
-          <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-bell mr-2"></i>
-            <span><a href="farmernotice.html" class="text-blue-100">Farmer Notices</a></span>
-          </li>
-          <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-question-circle mr-2"></i>
-            <span><a href="faq.html" class="text-blue-100">FAQ</a></span>
           </li>
         </ul>
       </nav>
@@ -101,12 +83,30 @@
             <p><strong>Air Quality:</strong> The air quality index (AQI) this month is 75, which is considered good.</p>
           </div>
           
-          <!-- Data Visualization -->
-          <h2>Temperature Visualization</h2>
+          <!-- Temperature Gauge Chart -->
+          <h2>Temperature Data Visualization</h2>
           <div class="chart-container">
-            <!-- Gauge Chart for Temperature -->
             <div class="chart-item">
               <canvas id="gaugeChart"></canvas>
+            </div>
+          </div>
+
+          <!-- AQI Box with Bar Charts for CO2, NH3, and Benzene -->
+          <div class="data-container">
+            <h2>AQI</h2>
+            <div class="chart-container">
+              <!-- Bar Chart for CO2 -->
+              <div class="chart-item">
+                <canvas id="co2Chart"></canvas>
+              </div>
+              <!-- Bar Chart for NH3 -->
+              <div class="chart-item">
+                <canvas id="nh3Chart"></canvas>
+              </div>
+              <!-- Bar Chart for Benzene -->
+              <div class="chart-item">
+                <canvas id="benzeneChart"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -117,10 +117,15 @@
   <script>
     // Sample data for the current month
     const currentData = {
-      temperature: 22
+      soilMoisture: 65,
+      airQuality: 75,
+      temperature: 22,
+      co2: 300,  // Example CO2 data (ppm)
+      nh3: 25,   // Example NH3 data (ppm)
+      benzene: 15  // Example Benzene data (ppm)
     };
 
-    // Doughnut Chart as Gauge for Temperature (Smaller Size)
+    // Doughnut Chart as Gauge for Temperature
     new Chart(document.getElementById('gaugeChart'), {
       type: 'doughnut',
       data: {
@@ -141,9 +146,84 @@
         plugins: {
           tooltip: {
             enabled: false
-          },
-          datalabels: {
-            display: false
+          }
+        }
+      }
+    });
+
+    // Bar Chart for CO2
+    new Chart(document.getElementById('co2Chart'), {
+      type: 'bar',
+      data: {
+        labels: ['CO2'],
+        datasets: [
+          {
+            label: 'CO2 (ppm)',
+            data: [currentData.co2],
+            backgroundColor: '#FF5733', // Red
+            borderColor: '#C70039',
+            borderWidth: 1,
+            barThickness: 40
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Bar Chart for NH3
+    new Chart(document.getElementById('nh3Chart'), {
+      type: 'bar',
+      data: {
+        labels: ['NH3'],
+        datasets: [
+          {
+            label: 'NH3 (ppm)',
+            data: [currentData.nh3],
+            backgroundColor: '#9ACD32', // Light green
+            borderColor: '#228B22',
+            borderWidth: 1,
+            barThickness: 40
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Bar Chart for Benzene
+    new Chart(document.getElementById('benzeneChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Benzene'],
+        datasets: [
+          {
+            label: 'Benzene (ppm)',
+            data: [currentData.benzene],
+            backgroundColor: '#1E90FF', // Blue
+            borderColor: '#1C6EA4',
+            borderWidth: 1,
+            barThickness: 40
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
           }
         }
       }
