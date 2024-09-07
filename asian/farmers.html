@@ -31,12 +31,17 @@
     }
     .chart-container {
       display: flex;
-      justify-content: center; /* Center the chart horizontally */
+      justify-content: center;
       margin-top: 20px;
     }
     .chart-item {
-      width: 300px; /* Adjust as needed */
-      height: 300px; /* Adjust as needed */
+      width: 300px;
+      height: 300px;
+    }
+    .bar-chart-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
     }
     .summary {
       margin-bottom: 20px;
@@ -109,6 +114,20 @@
               <canvas id="gaugeChart"></canvas>
             </div>
           </div>
+
+          <!-- New Bar Charts for CO2, NH3, Benzene -->
+          <h2>Air Quality Data (CO2, NH3, Benzene)</h2>
+          <div class="bar-chart-container">
+            <div class="chart-item">
+              <canvas id="co2Chart"></canvas>
+            </div>
+            <div class="chart-item">
+              <canvas id="nh3Chart"></canvas>
+            </div>
+            <div class="chart-item">
+              <canvas id="benzeneChart"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -117,7 +136,10 @@
   <script>
     // Sample data for the current month
     const currentData = {
-      temperature: 22
+      temperature: 22,
+      co2: 40,    // Example CO2 value
+      nh3: 30,    // Example NH3 value
+      benzene: 20 // Example Benzene value
     };
 
     // Doughnut Chart as Gauge for Temperature (Smaller Size)
@@ -144,6 +166,81 @@
           },
           datalabels: {
             display: false
+          }
+        }
+      }
+    });
+
+    // Bar Chart for CO2
+    new Chart(document.getElementById('co2Chart'), {
+      type: 'bar',
+      data: {
+        labels: ['CO2'],
+        datasets: [
+          {
+            label: 'CO2 Level',
+            data: [currentData.co2],
+            backgroundColor: ['#FF5733'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+    // Bar Chart for NH3
+    new Chart(document.getElementById('nh3Chart'), {
+      type: 'bar',
+      data: {
+        labels: ['NH3'],
+        datasets: [
+          {
+            label: 'NH3 Level',
+            data: [currentData.nh3],
+            backgroundColor: ['#33FF57'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+    // Bar Chart for Benzene
+    new Chart(document.getElementById('benzeneChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Benzene'],
+        datasets: [
+          {
+            label: 'Benzene Level',
+            data: [currentData.benzene],
+            backgroundColor: ['#3357FF'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
           }
         }
       }
