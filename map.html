@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blue-Green Dashboard</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+
+    </style>
+
+</head>
+<body class="bg-blue-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside
+class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
+>
+<!-- Sidebar Header -->
+<div class="px-4 py-6 flex items-center justify-between">
+  <div class="flex items-center cursor-pointer">
+    <span class="text-lg font-semibold">Super Admin Panel</span>
+  </div>
+  <!-- Sidebar toggle button -->
+  <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+    <i class="fas fa-bars"></i>
+  </button>
+</div>
+<!-- Sidebar Items -->
+<nav class="flex-grow hidden lg:block">
+  <ul class="space-y-2">
+    <!-- Sidebar item with responsive text -->
+    <li class="px-4 py-2 flex items-center">
+      <i class="fas fa-home mr-2"></i>
+      <span><a href="adminDashboard.html">Home</a></span>
+    </li>
+    <li class="px-4 py-2 flex items-center">
+      <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
+      <span><a href="map.html">View Devices</a></span>
+    </li>
+    <li class="px-4 py-2 flex items-center">
+      <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
+      <span><a href="add.html">Add Device</a></span>
+    </li>
+    <li class="px-4 py-2 flex items-center">
+      <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
+      <span><a href="removedevice.html">Remove Device</a></span>
+    </li>
+    <li class="px-4 py-2 flex items-center">
+      <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
+      <span><a href="adduser.html">Add User</a></span>
+    </li>
+    <li class="px-4 py-2 flex items-center">
+      <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
+      <span><a href="notice.html">Notice</a></span>
+    </li>
+  </ul>
+</nav>
+</aside>
