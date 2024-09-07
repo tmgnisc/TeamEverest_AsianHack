@@ -47,4 +47,44 @@
     </aside>
  
  
- 
+<!-- Main Content -->
+<main class="flex-grow p-4 lg:p-8">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-4">Farmer Issue Details</h1>
+   
+    <!-- Issue Details -->
+    <div class="issue-container">
+      <div class="issue-detail">
+        <label for="farmerName">Farmer Name:</label>
+        <p id="farmerName">John Doe</p>
+      </div>
+      <div class="issue-detail">
+        <label for="issueTitle">Issue Title:</label>
+        <p id="issueTitle">Pest Infestation</p>
+      </div>
+      <div class="issue-detail">
+        <label for="issueDescription">Issue Description:</label>
+        <p id="issueDescription">The crops are being affected by a severe pest infestation. Immediate assistance is required to save the crops.</p>
+      </div>
+      <div class="issue-detail">
+        <label for="issueDate">Date Reported:</label>
+        <p id="issueDate">2024-09-07</p>
+      </div>
+      <div class="issue-detail">
+        <button  class="chat-button" id="chatWithFarmers" >Chat with Farmer</button>
+      </div>
+    </div>
+   
+    <!-- Chat Box -->
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-box" id="chatBox">
+        <!-- Messages will appear here -->
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button id="sendMessage">Send</button>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
