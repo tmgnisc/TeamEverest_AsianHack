@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard with Data Visualization</title>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    rel="stylesheet"
-  />
-  <link
-    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    rel="stylesheet"
-  />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
-  <style>
-
-  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard with Data Visualization</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <style></style>
   </head>
   <body class="bg-gray-100">
     <div class="flex flex-col lg:flex-row h-screen">
       <!-- Sidebar -->
-      <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+      <aside
+        class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
+      >
         <!-- Sidebar Header -->
         <div class="px-4 py-6 flex items-center justify-between">
           <div class="flex items-center cursor-pointer">
@@ -36,44 +36,86 @@
           <ul class="space-y-2">
             <li class="px-4 py-2 flex items-center active">
               <i class="fas fa-home mr-2"></i>
-              <span><a href="farmers.html" class="text-blue-100">Dashboard</a></span>
+              <span
+                ><a href="farmers.html" class="text-blue-100"
+                  >Dashboard</a
+                ></span
+              >
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-exclamation-circle mr-2"></i>
-              <span><a href="complaint.html" class="text-blue-100">Register a Complaint</a></span>
+              <span
+                ><a href="complaint.html" class="text-blue-100"
+                  >Register a Complaint</a
+                ></span
+              >
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-trash mr-2"></i>
-              <span><a href="removedev.html" class="text-blue-100">Request Device Removal</a></span>
+              <span
+                ><a href="removedev.html" class="text-blue-100"
+                  >Request Device Removal</a
+                ></span
+              >
             </li>
             <li class="px-4 py-2 flex items-center">
               <i class="fas fa-bell mr-2"></i>
-              <span><a href="farmernotice.html" class="text-blue-100">Farmer Notices</a></span>
+              <span
+                ><a href="farmernotice.html" class="text-blue-100"
+                  >Farmer Notices</a
+                ></span
+              >
             </li>
             <li class="px-4 py-2 flex items-center sidebar">
               <i class="fas fa-question-circle mr-2"></i>
               <span><a href="faq.html" class="text-blue-100">FAQ</a></span>
-          </li>
+            </li>
           </ul>
         </nav>
       </aside>
 
-        <!-- Main Content -->
-    <main class="flex-grow p-4 lg:p-8">
-      <div class="max-w-6xl mx-auto">
-        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Device Data Visualization</h1>
-        
-        <!-- Textual Summary -->
-        <div class="data-container">
-          <div class="summary">
-            <p><strong>Soil Moisture:</strong> The soil moisture level for this month is at 65%, which is optimal for crops.</p>
-            <p><strong>Temperature:</strong> The temperature for this month is 22°C, which is suitable for current crops.</p>
-            <p><strong>Air Quality:</strong> The air quality index (AQI) this month is 75, which is considered good.</p>
+      <!-- Main Content -->
+      <main class="flex-grow p-4 lg:p-8">
+        <div class="max-w-6xl mx-auto">
+          <h1 class="text-3xl font-semibold text-gray-800 mb-4">
+            Device Data Visualization
+          </h1>
+
+          <!-- Textual Summary -->
+          <div class="data-container">
+            <div class="summary">
+              <p>
+                <strong>Soil Moisture:</strong> The soil moisture level for this
+                month is at 65%, which is optimal for crops.
+              </p>
+              <p>
+                <strong>Temperature:</strong> The temperature for this month is
+                22°C, which is suitable for current crops.
+              </p>
+              <p>
+                <strong>Air Quality:</strong> The air quality index (AQI) this
+                month is 75, which is considered good.
+              </p>
+            </div>
+            <!-- Data Visualization -->
+            <h2>Combined Data Visualization</h2>
+            <div class="chart-container">
+              <!-- Bar Chart for Soil Moisture -->
+              <div class="chart-item">
+                <canvas id="soilMoistureChart"></canvas>
+              </div>
+              <!-- Bar Chart for Air Quality -->
+              <div class="chart-item">
+                <canvas id="airQualityChart"></canvas>
+              </div>
+              <!-- Gauge Chart for Temperature -->
+              <div class="chart-item">
+                <canvas id="gaugeChart"></canvas>
+              </div>
+            </div>
           </div>
-           <!-- Textual Summary -->
-        <div class="data-container">
-          <div class="summary">
-            <p><strong>Soil Moisture:</strong> The soil moisture level for this month is at 65%, which is optimal for crops.</p>
-            <p><strong>Temperature:</strong> The temperature for this month is 22°C, which is suitable for current crops.</p>
-            <p><strong>Air Quality:</strong> The air quality index (AQI) this month is 75, which is considered good.</p>
-          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
