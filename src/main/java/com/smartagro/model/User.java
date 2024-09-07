@@ -15,7 +15,9 @@ public class User {
 	private String password;
 	private String email;
 	private String address;
-	private String municipality;
+	private String userImage;
+	
+	private String category;
 	
 	public int getId() {
 		return id;
@@ -47,12 +49,21 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getMunicipality() {
-		return municipality;
+	public String getUserImage() {
+		return userImage;
 	}
-	public void setMunicipality(String municipality) {
-		this.municipality = municipality;
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+
+	
 	
 	
 	

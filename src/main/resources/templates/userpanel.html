@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <style>
+     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .profile-container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;    
+      
+      background-color: #fff;
+    }
+    .profile-detail {
+      margin-bottom: 20px;
+    }
+    .profile-detail label {
+      font-weight: 600;
+    }
+    .profile-detail p {
+      margin: 5px 0;
+    }
+    @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .active {
+      background-color: rgb(14, 172, 122);
+      color: rgb(255, 255, 255);
+    }
+    @media (min-width: 1024px) {
+      .lg\\:flex {
+        display: flex;
+      }
+      .lg\\:hidden {
+        display: none;
+      }
+    }
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-blue-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+      <!-- Sidebar Header -->
+      <div class="px-4 py-6 flex items-center justify-between">
+        <div class="flex items-center cursor-pointer">
+          <span class="text-lg font-semibold">User Panel</span>
+        </div>
+        <!-- Sidebar toggle button -->
+        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <!-- Sidebar Items -->
+      <nav class="flex-grow hidden lg:block">
+        <ul class="space-y-2">
+          <!-- Sidebar items -->
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-user mr-2"></i>
+            <span><a href="viewfarmer.html">View Farmer</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-comments mr-2"></i>
+            <span><a href="communication.html">Communication</a></span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto">
+        <!-- Dashboard Header -->
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">User Panel</h1>
+        <!-- Main Content Section -->
+        <body class="bg-blue-100 p-4">
+            <div class="max-w-6xl mx-auto">
+              <h1 class="text-3xl font-semibold text-gray-800 mb-4">Farmer Profile Details</h1>
+              
+              <!-- Farmer Details -->
+              <div class="profile-container">
+                <div class="profile-detail">
+                  <label for="farmerName">Farmer Name:</label>
+                  <p id="farmerName">John Doe</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="farmerID">Farmer ID:</label>
+                  <p id="farmerID">12345</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="contactNumber">Contact Number:</label>
+                  <p id="contactNumber">+977-123-4567</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="location">Location:</label>
+                  <p id="location">Kathmandu, Nepal</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="farmSize">Farm Size:</label>
+                  <p id="farmSize">5 acres</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="crops">Crops Grown:</label>
+                  <p id="crops">Rice, Wheat, Corn</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="issuesReported">Issues Reported:</label>
+                  <p id="issuesReported">Pest Infestation, Irrigation Problems</p>
+                </div>
+                <div class="profile-detail">
+                  <label for="lastVisit">Last Expert Visit:</label>
+                  <p id="lastVisit">2024-08-15</p>
+                </div>
+              </div>
+            </div>
+       
+      </div>
+    </main>
+  </div>
+
+  <!-- Chart.js (if needed) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Wait for the DOM content to be fully loaded
+    document.addEventListener("DOMContentLoaded", function () {
+      // Hamburger menu icon
+      const toggleSidebarButton = document.getElementById("toggleSidebar");
+      // Sidebar navigation
+      const sidebarNav = document.querySelector("aside nav");
+
+      // Function to toggle sidebar visibility
+      function toggleSidebar() {
+        sidebarNav.classList.toggle("hidden");
+      }
+
+      // Toggle sidebar when hamburger icon is clicked
+      toggleSidebarButton.addEventListener("click", toggleSidebar);
+    });
+  </script>
+</body>
+</html>

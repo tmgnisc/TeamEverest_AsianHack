@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Issue Details</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      .issue-container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #fff;
+      }
+      .issue-detail {
+        margin-bottom: 20px;
+      }
+      .issue-detail label {
+        font-weight: 600;
+      }
+      .issue-detail p {
+        margin: 5px 0;
+      }
+      .chat-button {
+        background-color: #058b2b;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .chat-button:hover {
+        background-color: #09f719;
+      }
+      .chat-button:focus {
+        outline: none;
+      }
+      .chat-box {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #fff;
+        max-height: 300px;
+        overflow-y: auto;
+        width: 300px;
+        height: 400px;
+      }
+      .chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+      .chat-input {
+        display: flex;
+        gap: 10px;
+      }
+      .chat-input input {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        flex: 1;
+      }
+      .chat-input button {
+        background-color: #058b2b;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        cursor: pointer;
+      }
+      .chat-input button:hover {
+        background-color: #09f719;
+      }
+    </style>
+  </head>
+  <body class="bg-blue-100">
+    <div class="flex flex-col lg:flex-row h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
+      >
+        <!-- Sidebar Header -->
+        <div class="px-4 py-6 flex items-center justify-between">
+          <div class="flex items-center cursor-pointer">
+            <span class="text-lg font-semibold">Admin</span>
+          </div>
+          <!-- Sidebar toggle button -->
+          <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <!-- Sidebar Items -->
+        <nav class="flex-grow hidden lg:block">
+          <ul class="space-y-2">
+            <!-- Sidebar items -->
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-user mr-2"></i>
+              <span
+                ><a href="viewfarmer.html" class="text-blue-100"
+                  >View Farmer</a
+                ></span
+              >
+            </li>
+            <li class="px-4 py-2 flex items-center active">
+              <i class="fas fa-comments mr-2"></i>
+              <span><a href="" class="text-blue-100">Communication</a></span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-grow p-4 lg:p-8">
+        <div class="max-w-6xl mx-auto">
+          <h1 class="text-3xl font-semibold text-gray-800 mb-4">
+            Farmer Issue Details
+          </h1>
+
+          <!-- Issue Details -->
+          <div class="issue-container">
+            <div class="issue-detail">
+              <label for="farmerName">Farmer Name:</label>
+              <p id="farmerName">John Doe</p>
+            </div>
+            <div class="issue-detail">
+              <label for="issueTitle">Issue Title:</label>
+              <p id="issueTitle">Pest Infestation</p>
+            </div>
+            <div class="issue-detail">
+              <label for="issueDescription">Issue Description:</label>
+              <p id="issueDescription">
+                The crops are being affected by a severe pest infestation.
+                Immediate assistance is required to save the crops.
+              </p>
+            </div>
+            <div class="issue-detail">
+              <label for="issueDate">Date Reported:</label>
+              <p id="issueDate">2024-09-07</p>
+            </div>
+            <div class="issue-detail">
+              <button class="chat-button" id="chatWithFarmers">
+                Chat with Farmer
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Box -->
+          <div class="chat-container" id="chatContainer">
+            <div class="chat-box" id="chatBox">
+              <!-- Messages will appear here -->
+            </div>
+            <div class="chat-input">
+              <input
+                type="text"
+                id="chatInput"
+                placeholder="Type a message..."
+              />
+              <button id="sendMessage">Send</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      document
+        .getElementById("chatWithFarmer")
+        .addEventListener("click", function () {
+          const chatContainer = document.getElementById("chatContainer");
+          chatContainer.style.display =
+            chatContainer.style.display === "block" ? "none" : "block";
+        });
+
+      document
+        .getElementById("sendMessage")
+        .addEventListener("click", function () {
+          const input = document.getElementById("chatInput");
+          const message = input.value.trim();
+          if (message) {
+            const chatBox = document.getElementById("chatBox");
+            const newMessage = document.createElement("div");
+            newMessage.className = "message";
+            newMessage.innerHTML = `
+        <div class="avatar">F</div>
+        <div class="text farmer">${message}</div>
+      `;
+            chatBox.appendChild(newMessage);
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+          }
+        });
+    </script>
+  </body>
+</html>

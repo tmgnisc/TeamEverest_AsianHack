@@ -55,6 +55,41 @@ public class mainController {
 			
 		return "index.html";
 		}
+	
+	
+	@GetMapping("/superAdmin")
+	public String adminDashboard() {
+		
+		return "superAdmin/adminDashboard.html";
+		
+	}
+	
+	@GetMapping("/addDevice")
+	public String addDevice() { 
+		return "superAdmin/add.html";
+	}
+	
+	@GetMapping("/addUser")
+	public String addUser() {
+		return "superAdmin/adduser.html";
+	}
+	@GetMapping("/viewDevice")
+	public String viewDevice() {
+		return "superAdmin/map.html";
+	}
+	
+	@GetMapping("/notice")
+	public String notice() {
+		return "superAdmin/notice.html";
+	}
+	
+	@GetMapping("/removeDevice")
+	public String removeDevice() {
+		return "superAdmin/removedevice.html";
+	}
+	
+	
+	
 		
 		
 	

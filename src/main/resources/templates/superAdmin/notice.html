@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+    /* Additional CSS for responsiveness */
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .active {
+      background-color: rgb(14, 172, 122);
+      color: rgb(255, 255, 255);
+    }
+  </style>
+</head>
+<body class="bg-blue-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+      <!-- Sidebar Header -->
+      <div class="px-4 py-6 flex items-center justify-between">
+        <div class="flex items-center cursor-pointer">
+          <span class="text-lg font-semibold">Super Admin Panel</span>
+        </div>
+        <!-- Sidebar toggle button -->
+        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <!-- Sidebar Items -->
+      <nav class="flex-grow hidden lg:block">
+        <ul class="space-y-2">
+          <!-- Sidebar item with responsive text -->
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-home mr-2"></i>
+            <span><a href="adminDashboard.html">Home</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
+            <span><a href="map.html">View Devices</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
+            <span><a href="add.html">Add Device</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
+            <span><a href="removedevice.html">Remove Device</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
+            <span><a href="adduser.html">Add User</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
+            <span><a href="notice.html">Notice</a></span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-grow p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Add Notice</h1>
+
+        <!-- Add Notice Form Section -->
+        <div class="bg-white p-4 rounded-lg shadow-lg mb-6 border border-gray-300">
+          <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add New Notice</h2>
+          <form id="noticeForm" action="" method="post">
+            <label for="noticeTitle" class="block text-gray-700 font-medium mb-2">Title</label>
+            <input type="text" id="noticeTitle" name="noticeTitle" class="form-input mb-4 w-full border border-gray-400 rounded-md p-2" required>
+
+            <label for="noticeDescription" class="block text-gray-700 font-medium mb-2">Description</label>
+            <textarea id="noticeDescription" name="noticeDescription" class="form-textarea mb-4 w-full border border-gray-400 rounded-md p-2" rows="4" required></textarea>
+
+            <input type="submit" id="submitButton" class="btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" value="Add Notice">
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Handle form submission
+    document.getElementById("noticeForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const title = document.getElementById("noticeTitle").value.trim();
+      const description = document.getElementById("noticeDescription").value.trim();
+
+      if (title && description) {
+        alert(`Notice Added!\nTitle: ${title}\nDescription: ${description}`);
+        // You can handle the form submission logic here, like sending data to the server.
+      } else {
+        alert("Please fill out all fields.");
+      }
+    });
+  </script>
+</body>
+</html>
