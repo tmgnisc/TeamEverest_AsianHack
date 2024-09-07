@@ -90,3 +90,21 @@
   </div>
 </main>
 </div>
+<script>
+  // Search functionality for the table
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#profileTableBody tr');
+    rows.forEach(row => {
+      const cells = row.getElementsByTagName('td');
+      const name = cells[0].textContent.toLowerCase();
+      if (name.includes(searchTerm)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
+</body>
+</html>
