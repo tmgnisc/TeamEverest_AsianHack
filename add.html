@@ -88,3 +88,64 @@
               <button type="submit" id="confirmButton">Confirm</button>
             </form>
           </div>
+          <script>
+            var map = L.map("map");
+            map.setView([51.505, -0.09], 13);
+  
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              maxZoom: 19,
+              attribution:
+                '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            }).addTo(map);
+  
+            navigator.geolocation.watchPosition(success, error);
+            let marker, zoomed, routingControl;
+  
+            function success(pos) {
+              const userLat = pos.coords.latitude;
+              const userLng = pos.coords.longitude;
+  
+              if (marker) {
+                map.removeLayer(marker);
+              }
+  
+              map.setView([userLat, userLng]);
+              marker = L.marker([userLat, userLng]).addTo(map);
+            }
+  
+            function error(err) {
+              if (err === 1) {
+                alert("Please allow geolocation access");
+              } else {
+                alert("Cannot get current location");
+              }
+            }
+  
+            // Function to update the coordinates input fields when the map is clicked
+            function showCoordinates(e) {
+              const { lat, lng } = e.latlng;
+              document.getElementById("latitudeInput").value = lat.toFixed(6);
+              document.getElementById("longitudeInput").value = lng.toFixed(6);
+            }
+  
+            map.on("click", showCoordinates); // Add click event listener to the map
+  
+            // Form submission handler
+            document
+              .getElementById("dustbinForm")
+              .addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                const dustbinId = document.getElementById("dustbinIdInput").value;
+                const latitude = document.getElementById("latitudeInput").value;
+                const longitude = document.getElementById("longitudeInput").value;
+                alert(
+                  `Dustbin ID: ${dustbinId}, Latitude: ${latitude}, Longitude: ${longitude}`
+                );
+                // You can add your logic here to handle the form submission
+                // For now, it just shows an alert with the entered values
+              });
+          </script>
+      </div>
+  </main>
+    </body>
+  </html>
