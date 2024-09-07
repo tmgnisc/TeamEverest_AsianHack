@@ -12,63 +12,246 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <style>
-
-    </style>
-
-</head>
-<body class="bg-blue-100">
-  <div class="flex flex-col lg:flex-row h-screen">
-    <!-- Sidebar -->
-    <aside
-class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
->
-<!-- Sidebar Header -->
-<div class="px-4 py-6 flex items-center justify-between">
-  <div class="flex items-center cursor-pointer">
-    <span class="text-lg font-semibold">Super Admin Panel</span>
-  </div>
-  <!-- Sidebar toggle button -->
-  <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
-    <i class="fas fa-bars"></i>
-  </button>
-</div>
-<!-- Sidebar Items -->
-<nav class="flex-grow hidden lg:block">
-  <ul class="space-y-2">
-    <!-- Sidebar item with responsive text -->
-    <li class="px-4 py-2 flex items-center">
-      <i class="fas fa-home mr-2"></i>
-      <span><a href="adminDashboard.html">Home</a></span>
-    </li>
-    <li class="px-4 py-2 flex items-center">
-      <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
-      <span><a href="map.html">View Devices</a></span>
-    </li>
-    <li class="px-4 py-2 flex items-center">
-      <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
-      <span><a href="add.html">Add Device</a></span>
-    </li>
-    <li class="px-4 py-2 flex items-center">
-      <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
-      <span><a href="removedevice.html">Remove Device</a></span>
-    </li>
-    <li class="px-4 py-2 flex items-center">
-      <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
-      <span><a href="adduser.html">Add User</a></span>
-    </li>
-    <li class="px-4 py-2 flex items-center">
-      <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
-      <span><a href="notice.html">Notice</a></span>
-    </li>
-  </ul>
-</nav>
-</aside>
-<main class="flex-grow p-4 lg:p-8">
-    <div id="map"></div>
-  </main>
-</div>
-<script th:src="@{js/jquery.min.js}"></script>
+    <style></style>
+  </head>
+  <body class="bg-blue-100">
+    <div class="flex flex-col lg:flex-row h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
+      >
+        <!-- Sidebar Header -->
+        <div class="px-4 py-6 flex items-center justify-between">
+          <div class="flex items-center cursor-pointer">
+            <span class="text-lg font-semibold">Super Admin Panel</span>
+          </div>
+          <!-- Sidebar toggle button -->
+          <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <!-- Sidebar Items -->
+        <nav class="flex-grow hidden lg:block">
+          <ul class="space-y-2">
+            <!-- Sidebar item with responsive text -->
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-home mr-2"></i>
+              <span><a href="adminDashboard.html">Home</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-map-marker-alt mr-2"></i>
+              <!-- Map/Location Icon -->
+              <span><a href="map.html">View Devices</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-plus-square mr-2"></i>
+              <!-- Add Icon -->
+              <span><a href="add.html">Add Device</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-minus-square mr-2"></i>
+              <!-- Remove Icon -->
+              <span><a href="removedevice.html">Remove Device</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-user-plus mr-2"></i>
+              <!-- Add User Icon -->
+              <span><a href="adduser.html">Add User</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-bell mr-2"></i>
+              <!-- Notice/Notification Icon -->
+              <span><a href="notice.html">Notice</a></span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="flex-grow p-4 lg:p-8">
+        <div id="map"></div>
+      </main>
+    </div>
+    <script th:src="@{js/jquery.min.js}"></script>
     <script th:src="@{js/popper.js}"></script>
     <script th:src="@{js/bootstrap.min.js}"></script>
     <script th:src="@{js/main.js}"></script>
+    <script>
+      var map = L.map("map");
+      map.setView([51.505, -0.09], 13);
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      navigator.geolocation.watchPosition(success, error);
+      let marker, zoomed, userLat, userLng, routingControl;
+
+      // Red icon for additional markers
+      const redIcon = L.icon({
+        iconUrl:
+          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowUrl:
+          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+        shadowSize: [41, 41],
+      });
+
+      function success(pos) {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+
+        // Remove the previous marker if it exists
+        if (marker) {
+          map.removeLayer(marker);
+        }
+
+        // Marker for user's current location (default blue)
+        marker = L.marker([userLat, userLng]).addTo(map);
+
+        // Show 2 to 4 random markers around current location
+        showRandomMarkers(userLat, userLng);
+
+        fetch("/cleancity/data")
+          .then((response) => response.json())
+          .then((data) => {
+            data.forEach((markerData) => {
+              const categories = markerData.category.split(" ");
+              categories.forEach((category) => {
+                fetch(`/cleancity/status?category=${category}`)
+                  .then((response) => response.text())
+                  .then((statusData) => {
+                    const status = statusData.trim();
+                    let customIcon;
+
+                    if (status === "full") {
+                      customIcon = L.icon({
+                        iconUrl:
+                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png", // Red marker icon
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowUrl:
+                          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+                        shadowSize: [41, 41],
+                      });
+                    } else {
+                      customIcon = L.icon({
+                        iconUrl:
+                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon.png", // Default blue marker icon
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowUrl:
+                          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+                        shadowSize: [41, 41],
+                      });
+                    }
+
+                    L.marker([markerData.lat, markerData.lon], {
+                      icon: customIcon,
+                    })
+                      .addTo(map)
+                      .bindPopup(
+                        `DustbinId: ${markerData.dustbinId} (${category})`
+                      )
+                      .on("click", onMarkerClick);
+                  });
+              });
+            });
+          });
+
+        // Zoom to the user's current location
+        if (!zoomed) {
+          map.setView([userLat, userLng], 13);
+          zoomed = true;
+        }
+      }
+
+      function error(err) {
+        alert("Error getting current location: " + err.message);
+      }
+
+      // Function to show random red markers nearby
+      function showRandomMarkers(lat, lng) {
+        const numMarkers = Math.floor(Math.random() * 3) + 2; // Randomly show 2 to 4 markers
+
+        for (let i = 0; i < numMarkers; i++) {
+          const randomLat = lat + (Math.random() - 0.5) * 0.01; // Adjust range as necessary
+          const randomLng = lng + (Math.random() - 0.5) * 0.01;
+
+          L.marker([randomLat, randomLng], { icon: redIcon })
+            .addTo(map)
+            .bindPopup(`Random Red Marker ${i + 1}`);
+        }
+      }
+
+      function onMarkerClick(e) {
+        if (routingControl) {
+          map.removeControl(routingControl);
+        }
+
+        routingControl = L.Routing.control({
+          waypoints: [L.latLng(userLat, userLng), e.latlng],
+        }).addTo(map);
+      }
+
+      navigator.geolocation.watchPosition(success, error);
+
+      const infoContent = document.getElementById("infoContent");
+
+      function openInfoPanel() {
+        infoPanel.classList.add("open");
+      }
+
+      function closeInfoPanel() {
+        infoPanel.classList.remove("open");
+      }
+
+      document
+        .getElementById("searchButton")
+        .addEventListener("click", function () {
+          const query = document.getElementById("searchInput").value;
+
+          const kathmanduValleyBounds = "85.2154,27.5142,85.4685,27.7465";
+
+          fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${query}&viewbox=${kathmanduValleyBounds}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data && data.length > 0) {
+                const result = data[0];
+                const lat = parseFloat(result.lat);
+                const lon = parseFloat(result.lon);
+
+                if (marker) {
+                  map.removeLayer(marker);
+                }
+
+                marker = L.marker([lat, lon]).addTo(map);
+                map.setView([lat, lon], 13);
+
+                openInfoPanel();
+              } else {
+                alert("Location not found within Kathmandu Valley.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+
+      document
+        .getElementById("clearButton")
+        .addEventListener("click", function () {
+          document.getElementById("searchInput").value = "";
+          closeInfoPanel();
+        });
+
+      openInfoPanel();
+    </script>
+  </body>
+</html>
