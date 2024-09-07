@@ -38,24 +38,24 @@ public class mainController {
 		return "index.html";
 	}
 	
-	@PostMapping("login")
+	@PostMapping("/login")
 	public String login(@ModelAttribute User u, Model model, HttpSession session) {
-		if(uRepo.existsByEmailAndPassword(u.getEmail(), DigestUtils.shaHex(u.getPassword()))) {
-			String username = uRepo.findUsernameByEmail(u.getEmail());
-			if(username!=null) {
-				session.setAttribute("username", username);
-				model.addAttribute("email", u.getEmail());
-				System.out.println(session.getAttribute("email"));
+		if(uRepo.existsByUsernameAndPassword(u.getUsername(), DigestUtils.shaHex(u.getPassword()))) {
+				String email = uRepo.findEmailByUsername(u.getUsername());
+				
+			
+				session.setAttribute("username", u.getUsername());
+				model.addAttribute("email", email);
+				System.out.println(session.getAttribute("username"));
 				session.setMaxInactiveInterval(1800);
 				
-				return ""; 
+				return "test.html"; 
 			}
-			
+		return "index.html";
 		}
 		
-		return "";
+		
 	
-	}
 	
 
 }
