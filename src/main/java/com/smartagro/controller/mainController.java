@@ -67,6 +67,7 @@ public class mainController {
 	                Path imgPath = Paths.get(saveDir.getAbsolutePath(), image.getOriginalFilename());
 	                Files.copy(image.getInputStream(), imgPath, StandardCopyOption.REPLACE_EXISTING);
 	                nu.setImage(image.getOriginalFilename());
+	                System.out.println("Item Picture saved to: " + imgPath);
 	            } catch (IOException e) {
 	                e.printStackTrace();
 	            }
