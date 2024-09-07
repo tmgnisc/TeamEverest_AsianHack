@@ -88,3 +88,29 @@
   </div>
 </main>
 </div>
+<script>
+  document.getElementById('chatWithFarmer').addEventListener('click', function() {
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.style.display = chatContainer.style.display === 'block' ? 'none' : 'block';
+  });
+
+
+  document.getElementById('sendMessage').addEventListener('click', function() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    if (message) {
+      const chatBox = document.getElementById('chatBox');
+      const newMessage = document.createElement('div');
+      newMessage.className = 'message';
+      newMessage.innerHTML = `
+        <div class="avatar">F</div>
+        <div class="text farmer">${message}</div>
+      `;
+      chatBox.appendChild(newMessage);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  });
+</script>
+</body>
+</html>
