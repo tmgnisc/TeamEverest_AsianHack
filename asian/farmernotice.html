@@ -15,4 +15,46 @@
     <style></style>
   </head>
   
+<body class="bg-gray-100">
+    <div class="flex flex-col lg:flex-row h-screen">
+        <!-- Sidebar -->
+        <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+            <!-- Sidebar Header -->
+            <div class="px-4 py-6 flex items-center justify-between">
+                <div class="flex items-center cursor-pointer">
+                    <span class="text-lg font-semibold">Farmer Panel</span>
+                </div>
+                <!-- Sidebar toggle button -->
+                <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <!-- Sidebar Items -->
+            <nav class="flex-grow hidden lg:block">
+                <ul class="space-y-2">
+                    <li class="px-4 py-2 flex items-center">
+                        <i class="fas fa-home mr-2"></i>
+                        <span><a href="farmers.html" class="text-blue-100">Dashboard</a></span>
+                    </li>
+                    <li class="px-4 py-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        <span><a href="complaint.html" class="text-blue-100">Register a Complaint</a></span>
+                    </li>
+                    <li class="px-4 py-2 flex items-center">
+                        <i class="fas fa-trash mr-2"></i>
+                        <span><a href="removedev.html" class="text-blue-100">Request Device Removal</a></span>
+                    </li>
+                    <li class="px-4 py-2 flex items-center active">
+                        <i class="fas fa-bell mr-2"></i>
+                        <span><a href="farmernotice.html" class="text-blue-100">Farmer Notices</a></span>
+                    </li>
+                    <li class="px-4 py-2 flex items-center sidebar">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        <span><a href="faq.html" class="text-blue-100">FAQ</a></span>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </aside>
+
 </html>
