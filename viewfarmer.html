@@ -1,110 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <title>Farmer Profiles</title>
- <link
-   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-   rel="stylesheet"
- />
- <link
-   href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-   rel="stylesheet"
- />
-<style>
-
-
-</style>
-</head>
-<body class="bg-blue-100">
-  <div class="flex flex-col lg:flex-row h-screen">
-    <!-- Sidebar -->
-    <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
-      <!-- Sidebar Header -->
-      <div class="px-4 py-6 flex items-center justify-between">
-        <div class="flex items-center cursor-pointer">
-          <span class="text-lg font-semibold">Admin</span>
-        </div>
-        <!-- Sidebar toggle button -->
-        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-      <!-- Sidebar Items -->
-      <nav class="flex-grow hidden lg:block">
-        <ul class="space-y-2">
-          <!-- Sidebar items -->
-          <li class="px-4 py-2 flex items-center active">
-            <i class="fas fa-user mr-2"></i>
-            <span><a href="viewfarmer.html" class="text-blue-100">View Farmer</a></span>
-          </li>
-          <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-comments mr-2"></i>
-            <span><a href="communication.html" class="text-blue-100">Communication</a></span>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-<!-- Main Content -->
-<main class="flex-grow p-4 lg:p-8">
-  <div class="max-w-6xl mx-auto">
-    <h1 class="text-3xl font-semibold text-gray-800 mb-4">Farmer Profiles</h1>
-   
-    <!-- Search Bar -->
-    <div class="search-container">
-      <input type="text" id="searchInput" class="search-input" placeholder="Search by name..." />
-    </div>
-
-
-    <!-- Profile Table -->
-    <table>
-      <thead>
-        <tr>
-          <th>Farmer Name</th>
-          <th>Farmer ID</th>
-          <th>Contact Number</th>
-          <th>Location</th>
-          <th>Farm Size</th>
-        </tr>
-      </thead>
-      <tbody id="profileTableBody">
-        <!-- Example Farmer Profiles -->
-        <tr>
-          <td>John Doe</td>
-          <td>12345</td>
-          <td>+977-123-4567</td>
-          <td>Kathmandu, Nepal</td>
-          <td>5 acres</td>
-        </tr>
-        <tr>
-          <td>Jane Smith</td>
-          <td>67890</td>
-          <td>+977-987-6543</td>
-          <td>Pokhara, Nepal</td>
-          <td>3 acres</td>
-        </tr>
-        <!-- More profiles can be added here -->
-      </tbody>
-    </table>
-  </div>
-</main>
-</div>
-<script>
-  // Search functionality for the table
-  document.getElementById('searchInput').addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#profileTableBody tr');
-    rows.forEach(row => {
-      const cells = row.getElementsByTagName('td');
-      const name = cells[0].textContent.toLowerCase();
-      if (name.includes(searchTerm)) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Profiles</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+      * {
+        font-family: "Poppins", sans-serif;
       }
-    });
-  });
-</script>
-</body>
+      .search-container {
+        margin-bottom: 20px;
+      }
+      .search-input {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f4f4f4;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body class="bg-blue-100">
+    <div class="flex flex-col lg:flex-row h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
+      >
+        <!-- Sidebar Header -->
+        <div class="px-4 py-6 flex items-center justify-between">
+          <div class="flex items-center cursor-pointer">
+            <span class="text-lg font-semibold">Admin</span>
+          </div>
+          <!-- Sidebar toggle button -->
+          <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <!-- Sidebar Items -->
+        <nav class="flex-grow hidden lg:block">
+          <ul class="space-y-2">
+            <!-- Sidebar items -->
+            <li class="px-4 py-2 flex items-center active">
+              <i class="fas fa-user mr-2"></i>
+              <span
+                ><a href="viewfarmer.html" class="text-blue-100"
+                  >View Farmer</a
+                ></span
+              >
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-comments mr-2"></i>
+              <span
+                ><a href="communication.html" class="text-blue-100"
+                  >Communication</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <!-- Main Content -->
+      <main class="flex-grow p-4 lg:p-8">
+        <div class="max-w-6xl mx-auto">
+          <h1 class="text-3xl font-semibold text-gray-800 mb-4">
+            Farmer Profiles
+          </h1>
+
+          <!-- Search Bar -->
+          <div class="search-container">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search by name..."
+            />
+          </div>
+
+          <!-- Profile Table -->
+          <table>
+            <thead>
+              <tr>
+                <th>Farmer Name</th>
+                <th>Farmer ID</th>
+                <th>Contact Number</th>
+                <th>Location</th>
+                <th>Farm Size</th>
+              </tr>
+            </thead>
+            <tbody id="profileTableBody">
+              <!-- Example Farmer Profiles -->
+              <tr>
+                <td>John Doe</td>
+                <td>12345</td>
+                <td>+977-123-4567</td>
+                <td>Kathmandu, Nepal</td>
+                <td>5 acres</td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>67890</td>
+                <td>+977-987-6543</td>
+                <td>Pokhara, Nepal</td>
+                <td>3 acres</td>
+              </tr>
+              <!-- More profiles can be added here -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+    <script>
+      // Search functionality for the table
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          const rows = document.querySelectorAll("#profileTableBody tr");
+          rows.forEach((row) => {
+            const cells = row.getElementsByTagName("td");
+            const name = cells[0].textContent.toLowerCase();
+            if (name.includes(searchTerm)) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        });
+    </script>
+  </body>
 </html>
