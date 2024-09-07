@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .active {
+      background-color: rgb(14, 172, 122);
+      color: rgb(255, 255, 255);
+    }
+  </style>
+</head>
+<body class="bg-blue-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+      <!-- Sidebar Header -->
+      <div class="px-4 py-6 flex items-center justify-between">
+        <div class="flex items-center cursor-pointer">
+          <span class="text-lg font-semibold">Super Admin Panel</span>
+        </div>
+        <!-- Sidebar toggle button -->
+        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <!-- Sidebar Items -->
+      <nav class="flex-grow hidden lg:block">
+        <ul class="space-y-2">
+          <!-- Sidebar item with responsive text -->
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-home mr-2"></i>
+            <span><a href="adminDashboard.html">Home</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-map-marker-alt mr-2"></i>
+            <span><a href="map.html">View Devices</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-plus-square mr-2"></i>
+            <span><a href="add.html">Add Device</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-minus-square mr-2"></i>
+            <span><a href="removedevice.html">Remove Device</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-user-plus mr-2"></i>
+            <span><a href="adduser.html">Add User</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-bell mr-2"></i>
+            <span><a href="notice.html">Notice</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center ">
+            <i class="fas fa-exclamation-circle mr-2"></i> <!-- Complaint Icon -->
+            <span><a href="#">View Complaint</a></span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-6">
+      <h1 class="text-2xl font-semibold mb-6">Complaints and Suggestions</h1>
+      
+      <!-- Complaints List -->
+      <div id="complaintsList" class="space-y-4">
+        <!-- Example complaint -->
+        <!-- This will be populated dynamically -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Example data - replace this with your actual data fetching logic
+    const complaints = [
+      {
+        id: 1,
+        farmerName: "John Doe",
+        complaint: "Issue with crop disease.",
+        suggestion: "Consider using organic pesticides."
+      },
+      {
+        id: 2,
+        farmerName: "Jane Smith",
+        complaint: "Low yield in rice crops.",
+        suggestion: "Try using improved seed varieties and proper fertilization."
+      }
+    ];
+
+    // Function to display complaints
+    function displayComplaints() {
+      const complaintsList = document.getElementById("complaintsList");
+      complaintsList.innerHTML = "";
+
+      complaints.forEach((complaint) => {
+        const complaintItem = document.createElement("div");
+        complaintItem.className = "bg-white shadow-md p-4 rounded-lg";
+        complaintItem.innerHTML = `
+          <h2 class="text-xl font-semibold">Farmer: ${complaint.farmerName}</h2>
+          <p class="mt-2"><strong>Complaint:</strong> ${complaint.complaint}</p>
+          
+          <!-- Suggestion Form -->
+          <form onsubmit="sendSuggestion(event, ${complaint.id})" class="mt-4">
+            <label for="suggestion-${complaint.id}" class="block text-sm font-medium text-gray-700">Your Suggestion:</label>
+            <textarea id="suggestion-${complaint.id}" name="suggestion" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            <button type="submit" class="mt-2 px-4 py-2 bg-green-600 text-white rounded-md">Send Suggestion</button>
+          </form>
+        `;
+        complaintsList.appendChild(complaintItem);
+      });
+    }
+
+    // Function to handle suggestion submission
+    function sendSuggestion(event, complaintId) {
+      event.preventDefault();
+      
+      const suggestion = event.target.querySelector('textarea').value;
+      if (!suggestion) {
+        alert("Please enter a suggestion before submitting.");
+        return;
+      }
+
+      // Example code - replace with actual submission logic
+      console.log(`Sending suggestion for complaint ID ${complaintId}: ${suggestion}`);
+
+      // Here, you would send the suggestion to the backend via an API call
+      // Example:
+      // fetch('/api/send-suggestion', {
+      //   method: 'POST',
+      //   body: JSON.stringify({ complaintId, suggestion }),
+      //   headers: { 'Content-Type': 'application/json' }
+      // }).then(response => response.json()).then(data => {
+      //   // Handle the response from the server
+      // });
+
+      // Clear the textarea after submission
+      event.target.reset();
+    }
+
+    // Call displayComplaints on page load
+    document.addEventListener("DOMContentLoaded", displayComplaints);
+  </script>
+</body>
+</html>

@@ -195,6 +195,11 @@ public class mainController {
 		return "superAdmin/removedevice.html";
 	}
 	
+	@GetMapping("/viewComplains")
+	public String viewComplains() {
+		return "superAdmin/viewcomplaint.html";
+	}
+	
 	
 	
 		

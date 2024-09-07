@@ -111,11 +111,6 @@
 
       <!-- Main Content -->
       <main class="flex-grow p-4 lg:p-8">
-		<div th:each="device : ${device}">
-		    <h2 th:text="${device.latitude}">Latitude</h2>
-		    <h2 th:text="${device.longitude}">Longitude</h2>
-		    <h2 th:text="${device.deviceId}">Device ID</h2>
-		</div>
 
 
         <div id="map"></div>
@@ -132,184 +127,152 @@
     <script th:src="@{js/bootstrap.min.js}"></script>
     <script th:src="@{js/main.js}"></script>
 
-    <script>
-      var map = L.map("map");
-      map.setView([51.505, -0.09], 13);
+    <script th:inline="javascript">
+		var devices = /*[[${device}]]*/ [];
+		var map = L.map("map").setView([51.505, -0.09], 13);
 
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
+		  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+		    maxZoom: 19,
+		    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		  }).addTo(map);
 
-      navigator.geolocation.watchPosition(success, error);
-      let marker, zoomed, userLat, userLng, routingControl;
+		  navigator.geolocation.watchPosition(success, error);
+		  let marker, zoomed, userLat, userLng, routingControl, radiusCircle;
 
-      // Red icon for additional markers
-      const redIcon = L.icon({
-        iconUrl:
-          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-        shadowSize: [41, 41],
-      });
+		  // Red icon for additional markers
+		  const redIcon = L.icon({
+		    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+		    iconSize: [25, 41],
+		    iconAnchor: [12, 41],
+		    popupAnchor: [1, -34],
+		    shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+		    shadowSize: [41, 41],
+		  });
 
-      function success(pos) {
-        userLat = pos.coords.latitude;
-        userLng = pos.coords.longitude;
+		  // Custom green icon for device markers
+		  const greenIcon = L.icon({
+		    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+		    iconSize: [25, 41],
+		    iconAnchor: [12, 41],
+		    popupAnchor: [1, -34],
+		    shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+		    shadowSize: [41, 41],
+		  });
 
-        // Remove the previous marker if it exists
-        if (marker) {
-          map.removeLayer(marker);
-        }
+		  function success(pos) {
+		    userLat = pos.coords.latitude;
+		    userLng = pos.coords.longitude;
 
-        // Marker for user's current location (default blue)
-        marker = L.marker([userLat, userLng]).addTo(map);
+		    if (marker) {
+		      map.removeLayer(marker);
+		    }
 
-        // Show 2 to 4 random markers around current location
-        showRandomMarkers(userLat, userLng);
+		    marker = L.marker([userLat, userLng]).addTo(map);
 
-        fetch("/cleancity/data")
-          .then((response) => response.json())
-          .then((data) => {
-            data.forEach((markerData) => {
-              const categories = markerData.category.split(" ");
-              categories.forEach((category) => {
-                fetch(`/cleancity/status?category=${category}`)
-                  .then((response) => response.text())
-                  .then((statusData) => {
-                    const status = statusData.trim();
-                    let customIcon;
+		    // Add a circle around the current location with blue color and smaller radius
+		    if (radiusCircle) {
+		      map.removeLayer(radiusCircle);
+		    }
 
-                    if (status === "full") {
-                      customIcon = L.icon({
-                        iconUrl:
-                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png", // Red marker icon
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34],
-                        shadowUrl:
-                          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-                        shadowSize: [41, 41],
-                      });
-                    } else {
-                      customIcon = L.icon({
-                        iconUrl:
-                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon.png", // Default blue marker icon
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34],
-                        shadowUrl:
-                          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-                        shadowSize: [41, 41],
-                      });
-                    }
+		    radiusCircle = L.circle([userLat, userLng], {
+		      color: 'blue',
+		      fillColor: '#00F',
+		      fillOpacity: 0.2,
+		      radius: 200 // Radius in meters (adjusted to a smaller value)
+		    }).addTo(map);
 
-                    L.marker([markerData.lat, markerData.lon], {
-                      icon: customIcon,
-                    })
-                      .addTo(map)
-                      .bindPopup(
-                        `DustbinId: ${markerData.dustbinId} (${category})`
-                      )
-                      .on("click", onMarkerClick);
-                  });
-              });
-            });
-          });
+		    // Use the latitude, longitude, and device ID from the model to place markers
+		    devices.forEach(function(device) {
+		      L.marker([device.latitude, device.longitude], { icon: greenIcon })
+		        .addTo(map)
+		        .bindPopup(`Device ID: ${device.deviceId}`);
+		    });
 
-        // Zoom to the user's current location
-        if (!zoomed) {
-          map.setView([userLat, userLng], 13);
-          zoomed = true;
-        }
-      }
+		    if (!zoomed) {
+		      map.setView([userLat, userLng], 13);
+		      zoomed = true;
+		    }
+		  }
 
-      function error(err) {
-        alert("Error getting current location: " + err.message);
-      }
+		  function error(err) {
+		    alert("Error getting current location: " + err.message);
+		  }
 
-      // Function to show random red markers nearby
-      function showRandomMarkers(lat, lng) {
-        const numMarkers = Math.floor(Math.random() * 3) + 2; // Randomly show 2 to 4 markers
+		  function showRandomMarkers(lat, lng) {
+		    const numMarkers = Math.floor(Math.random() * 3) + 2;
 
-        for (let i = 0; i < numMarkers; i++) {
-          const randomLat = lat + (Math.random() - 0.5) * 0.01; // Adjust range as necessary
-          const randomLng = lng + (Math.random() - 0.5) * 0.01;
+		    for (let i = 0; i < numMarkers; i++) {
+		      const randomLat = lat + (Math.random() - 0.5) * 0.01;
+		      const randomLng = lng + (Math.random() - 0.5) * 0.01;
 
-          L.marker([randomLat, randomLng], { icon: redIcon })
-            .addTo(map)
-            .bindPopup(`Random Red Marker ${i + 1}`);
-        }
-      }
+		      L.marker([randomLat, randomLng], { icon: redIcon })
+		        .addTo(map)
+		        .bindPopup(`Random Red Marker ${i + 1}`);
+		    }
+		  }
 
-      function onMarkerClick(e) {
-        if (routingControl) {
-          map.removeControl(routingControl);
-        }
+		  function onMarkerClick(e) {
+		    if (routingControl) {
+		      map.removeControl(routingControl);
+		    }
 
-        routingControl = L.Routing.control({
-          waypoints: [L.latLng(userLat, userLng), e.latlng],
-        }).addTo(map);
-      }
+		    routingControl = L.Routing.control({
+		      waypoints: [L.latLng(userLat, userLng), e.latlng],
+		    }).addTo(map);
+		  }
 
-      navigator.geolocation.watchPosition(success, error);
+		  navigator.geolocation.watchPosition(success, error);
 
-      const infoContent = document.getElementById("infoContent");
+		  const infoContent = document.getElementById("infoContent");
 
-      function openInfoPanel() {
-        infoPanel.classList.add("open");
-      }
+		  function openInfoPanel() {
+		    infoPanel.classList.add("open");
+		  }
 
-      function closeInfoPanel() {
-        infoPanel.classList.remove("open");
-      }
+		  function closeInfoPanel() {
+		    infoPanel.classList.remove("open");
+		  }
 
-      document
-        .getElementById("searchButton")
-        .addEventListener("click", function () {
-          const query = document.getElementById("searchInput").value;
+		  document
+		    .getElementById("searchButton")
+		    .addEventListener("click", function () {
+		      const query = document.getElementById("searchInput").value;
 
-          const kathmanduValleyBounds = "85.2154,27.5142,85.4685,27.7465";
+		      const kathmanduValleyBounds = "85.2154,27.5142,85.4685,27.7465";
 
-          fetch(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${query}&viewbox=${kathmanduValleyBounds}`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              if (data && data.length > 0) {
-                const result = data[0];
-                const lat = parseFloat(result.lat);
-                const lon = parseFloat(result.lon);
+		      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&viewbox=${kathmanduValleyBounds}`)
+		        .then((response) => response.json())
+		        .then((data) => {
+		          if (data && data.length > 0) {
+		            const result = data[0];
+		            const lat = parseFloat(result.lat);
+		            const lon = parseFloat(result.lon);
 
-                if (marker) {
-                  map.removeLayer(marker);
-                }
+		            if (marker) {
+		              map.removeLayer(marker);
+		            }
 
-                marker = L.marker([lat, lon]).addTo(map);
-                map.setView([lat, lon], 13);
+		            marker = L.marker([lat, lon]).addTo(map);
+		            map.setView([lat, lon], 13);
 
-                openInfoPanel();
-              } else {
-                alert("Location not found within Kathmandu Valley.");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        });
+		            openInfoPanel();
+		          } else {
+		            alert("Location not found within Kathmandu Valley.");
+		          }
+		        })
+		        .catch((error) => {
+		          console.error("Error:", error);
+		        });
+		    });
 
-      document
-        .getElementById("clearButton")
-        .addEventListener("click", function () {
-          document.getElementById("searchInput").value = "";
-          closeInfoPanel();
-        });
+		  document
+		    .getElementById("clearButton")
+		    .addEventListener("click", function () {
+		      document.getElementById("searchInput").value = "";
+		      closeInfoPanel();
+		    });
 
-      openInfoPanel();
+		  openInfoPanel();
     </script>
   </body>
 </html>
