@@ -14,7 +14,6 @@
   />
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-    /* Additional CSS for responsiveness */
     * {
       font-family: "Poppins", sans-serif;
     }
@@ -41,29 +40,28 @@
       <!-- Sidebar Items -->
       <nav class="flex-grow hidden lg:block">
         <ul class="space-y-2">
-          <!-- Sidebar item with responsive text -->
           <li class="px-4 py-2 flex items-center">
             <i class="fas fa-home mr-2"></i>
             <span><a href="adminDashboard.html">Home</a></span>
           </li>
           <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
+            <i class="fas fa-map-marker-alt mr-2"></i>
             <span><a href="map.html">View Devices</a></span>
           </li>
           <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
+            <i class="fas fa-plus-square mr-2"></i>
             <span><a href="add.html">Add Device</a></span>
           </li>
           <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
+            <i class="fas fa-minus-square mr-2"></i>
             <span><a href="removedevice.html">Remove Device</a></span>
           </li>
           <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
+            <i class="fas fa-user-plus mr-2"></i>
             <span><a href="adduser.html">Add User</a></span>
           </li>
           <li class="px-4 py-2 flex items-center">
-            <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
+            <i class="fas fa-bell mr-2"></i>
             <span><a href="notice.html">Notice</a></span>
           </li>
         </ul>
@@ -79,36 +77,36 @@
         <!-- Add User Form Section -->
         <div class="bg-white rounded-lg shadow p-4 mb-4 border border-gray-300">
           <h2 class="text-xl font-semibold mb-4">Add User</h2>
-          <form action="" method="post" enctype="multipart/form-data">
+          <form action="/register" method="post" enctype="multipart/form-data">
             <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
-            <input type="text" id="username" name="username" class="form-input mb-4 w-full border border-gray-400 rounded-md p-2" required>
+            <input type="text" id="username" name="username" class="mb-4 w-full border border-gray-400 rounded-md p-2" required>
 
             <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-            <input type="email" id="email" name="email" class="form-input mb-4 w-full border border-gray-400 rounded-md p-2" required>
+            <input type="email" id="email" name="email" class="mb-4 w-full border border-gray-400 rounded-md p-2" required>
 
             <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
-            <input type="password" id="password" name="password" class="form-input mb-4 w-full border border-gray-400 rounded-md p-2" required>
+            <input type="password" id="password" name="password" class="mb-4 w-full border border-gray-400 rounded-md p-2" required>
 
             <!-- New Address Field -->
             <label for="address" class="block text-gray-700 font-medium mb-2">Address</label>
-            <input type="text" id="address" name="address" class="form-input mb-4 w-full border border-gray-400 rounded-md p-2" required>
+            <input type="text" id="address" name="address" class="mb-4 w-full border border-gray-400 rounded-md p-2" required>
 
             <!-- New Image Upload Field -->
             <label for="image" class="block text-gray-700 font-medium mb-2">Profile Image</label>
-            <input type="file" id="image" name="image" class="form-input mb-4 w-full border border-gray-400 rounded-md p-2" accept="image/*" required>
+            <input type="file" id="image" name="image" class="mb-4 w-full border border-gray-400 rounded-md p-2" required>
 
             <label for="category" class="block text-gray-700 font-medium mb-2">Category</label>
-            <select id="category" name="category" class="form-select mb-4 w-full border border-gray-400 rounded-md p-2" required>
+            <select id="category" name="category" class="mb-4 w-full border border-gray-400 rounded-md p-2" required>
               <option value="" disabled selected>Select a category</option>
               <option value="admin">Farmer</option>
               <option value="agronomist">Agronomist</option>
-              <option value="agricultural researcher">Agricultural Researcher</option>
+              <option value="agricultural_researcher">Agricultural Researcher</option>
               <option value="irrigation_specialist">Irrigation Specialist</option>
               <option value="food_scientist">Food Scientist</option>
               <option value="crop_consultant">Crop Consultant</option>
             </select>
 
-            <input type="submit" class="btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" value="Add User">
+            <input type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" value="Add User">
           </form>
         </div>
       </div>
