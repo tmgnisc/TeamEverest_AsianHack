@@ -1,20 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Farmer Notices</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <style></style>
-  </head>
-  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+        * {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .notice-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .notice-container h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .notice {
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .notice-title {
+            font-weight: 600;
+        }
+
+        .notice-date {
+            color: #ddd;
+            font-size: 0.875rem;
+        }
+
+        .notice:nth-child(1) {
+            background-color: #006400; /* Dark green */
+        }
+
+        .notice:nth-child(2) {
+            background-color: #228B22; /* Forest green */
+        }
+
+        .notice:nth-child(3) {
+            background-color: #2E8B57; /* Sea green */
+        }
+
+        .notice:nth-child(4) {
+            background-color: #3CB371; /* Medium sea green */
+        }
+    </style>
+</head>
+
 <body class="bg-gray-100">
     <div class="flex flex-col lg:flex-row h-screen">
         <!-- Sidebar -->
@@ -56,39 +103,39 @@
                 </ul>
             </nav>
         </aside>
- <!-- Main Content -->
- <main class="flex-grow p-4 lg:p-8">
-    <div class="max-w-6xl mx-auto">
-        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Farmer Notices</h1>
 
-        <!-- Notices Section -->
-        <div class="notice-container">
-            <h2>Important Notices</h2>
-            <div class="notice">
-                <p class="notice-title">Notice Title 1</p>
-                <p class="notice-date">September 1, 2024</p>
-                <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
+        <!-- Main Content -->
+        <main class="flex-grow p-4 lg:p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl font-semibold text-gray-800 mb-4">Farmer Notices</h1>
+
+                <!-- Notices Section -->
+                <div class="notice-container">
+                    <h2>Important Notices</h2>
+                    <div class="notice">
+                        <p class="notice-title">Notice Title 1</p>
+                        <p class="notice-date">September 1, 2024</p>
+                        <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
+                    </div>
+                    <div class="notice">
+                        <p class="notice-title">Notice Title 2</p>
+                        <p class="notice-date">September 5, 2024</p>
+                        <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
+                    </div>
+                    <div class="notice">
+                        <p class="notice-title">Notice Title 3</p>
+                        <p class="notice-date">September 10, 2024</p>
+                        <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
+                    </div>
+                    <div class="notice">
+                        <p class="notice-title">Notice Title 4</p>
+                        <p class="notice-date">September 15, 2024</p>
+                        <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
+                    </div>
+                </div>
             </div>
-            <div class="notice">
-                <p class="notice-title">Notice Title 2</p>
-                <p class="notice-date">September 5, 2024</p>
-                <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
-            </div>
-            <div class="notice">
-                <p class="notice-title">Notice Title 3</p>
-                <p class="notice-date">September 10, 2024</p>
-                <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
-            </div>
-            <div class="notice">
-                <p class="notice-title">Notice Title 4</p>
-                <p class="notice-date">September 15, 2024</p>
-                <p>Details about the notice go here. This could include important information or updates relevant to farmers.</p>
-            </div>
-        </div>
+        </main>
     </div>
-</main>
-</div>
 </body>
 
-</html>
 </html>
