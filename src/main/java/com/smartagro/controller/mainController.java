@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,7 +107,43 @@ public class mainController {
 	
 	
 	@GetMapping("/superAdmin")
-	public String adminDashboard() {
+	public String adminDashboard(@ModelAttribute User u, Model model) {
+		
+		long totalDevices = ndRepo.count();
+		
+		long totaluserCount = uRepo.count();
+		
+		List<User> uList = uRepo.findAll();
+		
+		model.addAttribute("uList", uList);
+		model.addAttribute("totalUser",totaluserCount);
+		model.addAttribute("totalDevices", totalDevices);
+		return "superAdmin/adminDashboard.html";
+		
+	}
+	
+	@GetMapping("/edit/{id}")
+	public String editForm(@PathVariable int id, Model model, HttpSession session) {
+		
+		User u = uRepo.getById(id);
+		model.addAttribute("user",u );
+		
+		return "editForm.html";
+		
+	}
+	
+	@GetMapping("/deleteUser/{id}")
+	public String deleteUser(@PathVariable int id, Model model) {
+		uRepo.deleteById(id);
+		
+		long totalDevices = ndRepo.count();
+		
+		long totaluserCount = uRepo.count();
+		
+		List<User> uList = uRepo.findAll();
+		model.addAttribute("uList", uList);
+		model.addAttribute("totalUser",totaluserCount);
+		model.addAttribute("totalDevices", totalDevices);
 		
 		return "superAdmin/adminDashboard.html";
 		
@@ -137,7 +174,10 @@ public class mainController {
 	}
 	
 	@GetMapping("/notice")
-	public String notice() {
+	public String notice(Model model) {
+		
+		List<Notice> notice = nRepo.findAll();
+		model.addAttribute("notice", notice);
 		return "superAdmin/notice.html";
 	}
 	
@@ -146,6 +186,7 @@ public class mainController {
 		nRepo.save(n);
 		return "superAdmin/notice.html";
 	}
+	
 	
 	@GetMapping("/removeDevice")
 	public String removeDevice() {

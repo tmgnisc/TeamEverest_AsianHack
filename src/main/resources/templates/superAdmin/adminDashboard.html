@@ -22,6 +22,30 @@
         background-color: rgb(14, 172, 122);
         color: rgb(255, 255, 255);
       }
+      .search-container {
+        margin-bottom: 20px;
+      }
+      .search-input {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f4f4f4;
+        font-weight: 600;
+      }
     </style>
   </head>
   <body class="bg-blue-100">
@@ -85,11 +109,11 @@
             <ul class="divide-y divide-gray-300">
               <li class="py-2">
                 <span class="text-gray-600">Total Devices</span>
-                <span id="degradableAmount" class="text-blue-600 ml-2">20</span>
+                <span id="degradableAmount" class="text-blue-600 ml-2" th:text="${totalDevices}"></span>
               </li>
               <li class="py-2">
                 <span class="text-gray-600">Total Farmers</span>
-                <span id="nonDegradableAmount" class="text-red-600 ml-2">25</span>
+                <span id="nonDegradableAmount" class="text-red-600 ml-2" th:text="${totalUser}">0</span>
               </li>
               <li class="py-2">
                 <span class="text-gray-600">Devices Returned</span>
@@ -97,6 +121,65 @@
               </li>
             </ul>
           </div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto">
+          <h1 class="text-3xl font-semibold text-gray-800 mb-4">
+            Engaged Users
+          </h1>
+
+          <!-- Search Bar -->
+          <div class="search-container">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search by name..."
+            />
+          </div>
+
+          <!-- Profile Table -->
+          <table>
+            <thead>
+              <tr >
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Category</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                
+
+              </tr>
+            </thead>
+            <tbody id="profileTableBody">
+              <!-- Example Farmer Profiles -->
+              <tr th:each="u:${uList}">
+                <td th:text="${u.id}"></td>
+                <td th:text="${u.username}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.address}"></td>
+                <td th:text="${u.category}"></td>
+                <td>
+				<a th:href="@{'/editUser/'+${u.id}}">
+					<input type="submit" value="Edit">					
+				</a>
+				</td>
+				<td>
+					<a th:href="@{'/deleteUser/'+${u.id}}">
+						
+						<input type="submit" value="Delete">
+						
+					</a>
+				</td>
+
+           
+              </tr>
+  
+              <!-- More profiles can be added here -->
+            </tbody>
+          </table>
         </div>
       </main>
     </div>
@@ -114,6 +197,24 @@
           sidebarNav.classList.toggle("hidden");
         });
       });
+    </script>
+    <script>
+      // Search functionality for the table
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          const rows = document.querySelectorAll("#profileTableBody tr");
+          rows.forEach((row) => {
+            const cells = row.getElementsByTagName("td");
+            const name = cells[0].textContent.toLowerCase();
+            if (name.includes(searchTerm)) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        });
     </script>
   </body>
 </html>

@@ -22,6 +22,30 @@
       background-color: rgb(14, 172, 122);
       color: rgb(255, 255, 255);
     }
+    .search-container {
+        margin-bottom: 20px;
+      }
+      .search-input {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f4f4f4;
+        font-weight: 600;
+      }
   </style>
 </head>
 <body class="bg-blue-100">
@@ -91,8 +115,66 @@
           </form>
         </div>
       </div>
+      <div class="max-w-6xl mx-auto">
+          <h1 class="text-3xl font-semibold text-gray-800 mb-4">
+            Notices
+          </h1>
+
+          <!-- Search Bar -->
+          <div class="search-container">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search by name..."
+            />
+          </div>
+
+          <!-- Profile Table -->
+          <table>
+            <thead>
+              <tr >
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                
+
+              </tr>
+            </thead>
+            <tbody id="profileTableBody">
+              <!-- Example Farmer Profiles -->
+              <tr th:each="n:${notice}">
+                <td th:text="${n.id}"></td>
+                <td th:text="${n.title}"></td>
+                <td th:text="${n.description}"></td>
+
+           
+              </tr>
+  
+              <!-- More profiles can be added here -->
+            </tbody>
+          </table>
+        </div>
     </main>
   </div>
-
+<script>
+      // Search functionality for the table
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          const rows = document.querySelectorAll("#profileTableBody tr");
+          rows.forEach((row) => {
+            const cells = row.getElementsByTagName("td");
+            const name = cells[0].textContent.toLowerCase();
+            if (name.includes(searchTerm)) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        });
+    </script>
 </body>
 </html>
