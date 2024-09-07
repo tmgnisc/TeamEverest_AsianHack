@@ -1,5 +1,4 @@
-Smart Agritech - Hackathon Project by Everest Innovators
-Overview
+Smart Agritech - Hackathon Project by Team Everest
 
 Smart Agritech is a comprehensive IoT-based solution aimed at enhancing agriculture management. The project is designed for municipalities and farmers to monitor and optimize their agricultural practices. Using a web-based application developed in Java Spring Boot, Smart Agritech enables municipalities, agriculture experts, and farmers to monitor environmental conditions, automate irrigation, and improve crop health. The project is developed by Everest Innovators and is intended to be sold to municipalities as a commercial solution.
 Features
