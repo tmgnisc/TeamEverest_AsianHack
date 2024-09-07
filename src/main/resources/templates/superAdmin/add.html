@@ -134,7 +134,7 @@
 
         <!-- Form for entering Dustbin ID -->
         <div id="formContainer">
-          <form id="dustbinForm" action="/addDevice" method="post">
+          <form id="dustbinForm" action="/addDeviceData" method="post">
             <input
               type="text"
               id="latitudeInput"
@@ -197,7 +197,7 @@
           map.on("click", showCoordinates); // Add click event listener to the map
 
           // Form submission handler
-          document
+          /* document
             .getElementById("dustbinForm")
             .addEventListener("submit", function (e) {
               e.preventDefault(); // Prevent the default form submission
@@ -209,9 +209,9 @@
               );
               // You can add your logic here to handle the form submission
               // For now, it just shows an alert with the entered values
-            });
+            });*/
         </script>
     </div>
-</main>
+    </main>
   </body>
 </html>

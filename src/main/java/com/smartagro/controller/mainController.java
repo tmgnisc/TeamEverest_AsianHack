@@ -113,7 +113,7 @@ public class mainController {
 		return "superAdmin/add.html";
 	}
 	
-	@PostMapping("")
+	@PostMapping("/addDeviceData")
 	public String addDeviceData(@ModelAttribute newDevices nd) {
 		ndRepo.save(nd);
 		return "superAdmin/add.html";
