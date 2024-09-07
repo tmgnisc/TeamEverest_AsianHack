@@ -1,22 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register a Complaint</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
+        * {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .form-container {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-container h2 i {
+            margin-right: 10px;
+            color: #ff5722;
+        }
+
+        .form-container label {
+            font-weight: bold;
+        }
     </style>
-  </head>
-  
+</head>
+
 <body class="bg-gray-100">
     <div class="flex h-screen">
         <!-- Sidebar -->
@@ -59,5 +83,55 @@
                 </ul>
             </nav>
         </aside>
+
+        <!-- Main Content -->
+        <main class="flex-grow flex items-center justify-center p-8">
+            <div class="form-container">
+                <h2><i class="fas fa-exclamation-circle"></i> Register a Complaint</h2>
+                <form class="bg-white rounded-lg">
+                    <div class="mb-3">
+                        <label for="farmerName" class="block text-gray-700 mb-1">Farmer Name</label>
+                        <input type="text" id="farmerName" name="farmerName" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="farmerEmail" class="block text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="farmerEmail" name="farmerEmail" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="complaintType" class="block text-gray-700 mb-1">Complaint Type</label>
+                        <select id="complaintType" name="complaintType" class="w-full px-3 py-2 border rounded-lg" required>
+                            <option value="">Select complaint type</option>
+                            <option value="Technical Issue">Technical Issue</option>
+                            <option value="Crop Disease">Crop Disease</option>
+                            <option value="Watering Issue">Watering Issue</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="block text-gray-700 mb-1">Description</label>
+                        <textarea id="description" name="description" rows="3" class="w-full px-3 py-2 border rounded-lg" placeholder="Describe your complaint" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="assignTo" class="block text-gray-700 mb-1">Assign To</label>
+                        <select id="assignTo" name="assignTo" class="w-full px-3 py-2 border rounded-lg" required>
+                            <option value="">Select user/department</option>
+                            <option value="Technical Support">Technical Support</option>
+                            <option value="Agricultural Expert">Agricultural Expert</option>
+                            <option value="Water Management">Water Management</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="issueImage" class="block text-gray-700 mb-1">Upload Image</label>
+                        <input type="file" id="issueImage" name="issueImage" accept="image/*" class="w-full px-3 py-2 border rounded-lg" required>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg">Submit Complaint</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
 
 </html>
