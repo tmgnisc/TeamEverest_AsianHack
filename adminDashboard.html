@@ -91,3 +91,17 @@
         </div>
       </main>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Hamburger menu icon
+        const toggleSidebarButton = document.getElementById("toggleSidebar");
+        const sidebarNav = document.querySelector("aside nav");
+
+        // Toggle sidebar when hamburger icon is clicked
+        toggleSidebarButton.addEventListener("click", function () {
+          sidebarNav.classList.toggle("hidden");
+        });
+      });
+    </script>
+  </body>
+</html>
