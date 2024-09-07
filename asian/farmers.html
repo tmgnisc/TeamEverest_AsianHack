@@ -31,13 +31,11 @@
     }
     .chart-container {
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: space-between;
+      justify-content: center; /* Center the chart horizontally */
+      margin-top: 20px;
     }
     .chart-item {
-      flex: 1;
-      max-width: calc(33.333% - 20px); /* Ensures three charts fit in a row with gap */
+      width: 300px; /* Adjust as needed */
       height: 300px; /* Adjust as needed */
     }
     .summary {
@@ -82,10 +80,10 @@
             <i class="fas fa-bell mr-2"></i>
             <span><a href="farmernotice.html" class="text-blue-100">Farmer Notices</a></span>
           </li>
-          <li class="px-4 py-2 flex items-center sidebar">
+          <li class="px-4 py-2 flex items-center">
             <i class="fas fa-question-circle mr-2"></i>
             <span><a href="faq.html" class="text-blue-100">FAQ</a></span>
-        </li>
+          </li>
         </ul>
       </nav>
     </aside>
@@ -104,16 +102,8 @@
           </div>
           
           <!-- Data Visualization -->
-          <h2>Combined Data Visualization</h2>
+          <h2>Temperature Visualization</h2>
           <div class="chart-container">
-            <!-- Bar Chart for Soil Moisture -->
-            <div class="chart-item">
-              <canvas id="soilMoistureChart"></canvas>
-            </div>
-            <!-- Bar Chart for Air Quality -->
-            <div class="chart-item">
-              <canvas id="airQualityChart"></canvas>
-            </div>
             <!-- Gauge Chart for Temperature -->
             <div class="chart-item">
               <canvas id="gaugeChart"></canvas>
@@ -127,68 +117,8 @@
   <script>
     // Sample data for the current month
     const currentData = {
-      soilMoisture: 65,
-      airQuality: 75,
       temperature: 22
     };
-
-    // Bar Chart for Soil Moisture
-    new Chart(document.getElementById('soilMoistureChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Soil Moisture'],
-        datasets: [
-          {
-            label: 'Soil Moisture (%)',
-            data: [currentData.soilMoisture],
-            backgroundColor: '#006400', // Dark green
-            borderColor: '#004d00',
-            borderWidth: 1,
-            barThickness: 40
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            beginAtZero: true
-          },
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
-    // Bar Chart for Air Quality
-    new Chart(document.getElementById('airQualityChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Air Quality'],
-        datasets: [
-          {
-            label: 'Air Quality (AQI)',
-            data: [currentData.airQuality],
-            backgroundColor: '#9ACD32', // Light green
-            borderColor: '#228B22',
-            borderWidth: 1,
-            barThickness: 40
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            beginAtZero: true
-          },
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
 
     // Doughnut Chart as Gauge for Temperature (Smaller Size)
     new Chart(document.getElementById('gaugeChart'), {
