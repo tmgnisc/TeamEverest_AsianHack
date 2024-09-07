@@ -1,121 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard with Data Visualization</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
-    <style></style>
-  </head>
-  <body class="bg-gray-100">
-    <div class="flex flex-col lg:flex-row h-screen">
-      <!-- Sidebar -->
-      <aside
-        class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
-      >
-        <!-- Sidebar Header -->
-        <div class="px-4 py-6 flex items-center justify-between">
-          <div class="flex items-center cursor-pointer">
-            <span class="text-lg font-semibold">Farmer Panel</span>
-          </div>
-          <!-- Sidebar toggle button -->
-          <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
-            <i class="fas fa-bars"></i>
-          </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard with Data Visualization</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .data-container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      background-color: #fff;
+      margin-bottom: 20px;
+    }
+    .data-container h2 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    .chart-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+    .chart-item {
+      flex: 1;
+      max-width: calc(33.333% - 20px); /* Ensures three charts fit in a row with gap */
+      height: 300px; /* Adjust as needed */
+    }
+    .summary {
+      margin-bottom: 20px;
+    }
+    canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+      <!-- Sidebar Header -->
+      <div class="px-4 py-6 flex items-center justify-between">
+        <div class="flex items-center cursor-pointer">
+          <span class="text-lg font-semibold">Farmer Panel</span>
         </div>
-        <!-- Sidebar Items -->
-        <nav class="flex-grow hidden lg:block">
-          <ul class="space-y-2">
-            <li class="px-4 py-2 flex items-center active">
-              <i class="fas fa-home mr-2"></i>
-              <span
-                ><a href="farmers.html" class="text-blue-100"
-                  >Dashboard</a
-                ></span
-              >
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-exclamation-circle mr-2"></i>
-              <span
-                ><a href="complaint.html" class="text-blue-100"
-                  >Register a Complaint</a
-                ></span
-              >
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-trash mr-2"></i>
-              <span
-                ><a href="removedev.html" class="text-blue-100"
-                  >Request Device Removal</a
-                ></span
-              >
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-bell mr-2"></i>
-              <span
-                ><a href="farmernotice.html" class="text-blue-100"
-                  >Farmer Notices</a
-                ></span
-              >
-            </li>
-            <li class="px-4 py-2 flex items-center sidebar">
-              <i class="fas fa-question-circle mr-2"></i>
-              <span><a href="faq.html" class="text-blue-100">FAQ</a></span>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+        <!-- Sidebar toggle button -->
+        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <!-- Sidebar Items -->
+      <nav class="flex-grow hidden lg:block">
+        <ul class="space-y-2">
+          <li class="px-4 py-2 flex items-center active">
+            <i class="fas fa-home mr-2"></i>
+            <span><a href="farmers.html" class="text-blue-100">Dashboard</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            <span><a href="complaint.html" class="text-blue-100">Register a Complaint</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-trash mr-2"></i>
+            <span><a href="removedev.html" class="text-blue-100">Request Device Removal</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-bell mr-2"></i>
+            <span><a href="farmernotice.html" class="text-blue-100">Farmer Notices</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center sidebar">
+            <i class="fas fa-question-circle mr-2"></i>
+            <span><a href="faq.html" class="text-blue-100">FAQ</a></span>
+        </li>
+        </ul>
+      </nav>
+    </aside>
 
-      <!-- Main Content -->
-      <main class="flex-grow p-4 lg:p-8">
-        <div class="max-w-6xl mx-auto">
-          <h1 class="text-3xl font-semibold text-gray-800 mb-4">
-            Device Data Visualization
-          </h1>
-
-          <!-- Textual Summary -->
-          <div class="data-container">
-            <div class="summary">
-              <p>
-                <strong>Soil Moisture:</strong> The soil moisture level for this
-                month is at 65%, which is optimal for crops.
-              </p>
-              <p>
-                <strong>Temperature:</strong> The temperature for this month is
-                22°C, which is suitable for current crops.
-              </p>
-              <p>
-                <strong>Air Quality:</strong> The air quality index (AQI) this
-                month is 75, which is considered good.
-              </p>
+    <!-- Main Content -->
+    <main class="flex-grow p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Device Data Visualization</h1>
+        
+        <!-- Textual Summary -->
+        <div class="data-container">
+          <div class="summary">
+            <p><strong>Soil Moisture:</strong> The soil moisture level for this month is at 65%, which is optimal for crops.</p>
+            <p><strong>Temperature:</strong> The temperature for this month is 22°C, which is suitable for current crops.</p>
+            <p><strong>Air Quality:</strong> The air quality index (AQI) this month is 75, which is considered good.</p>
+          </div>
+          
+          <!-- Data Visualization -->
+          <h2>Combined Data Visualization</h2>
+          <div class="chart-container">
+            <!-- Bar Chart for Soil Moisture -->
+            <div class="chart-item">
+              <canvas id="soilMoistureChart"></canvas>
             </div>
-            <!-- Data Visualization -->
-            <h2>Combined Data Visualization</h2>
-            <div class="chart-container">
-              <!-- Bar Chart for Soil Moisture -->
-              <div class="chart-item">
-                <canvas id="soilMoistureChart"></canvas>
-              </div>
-              <!-- Bar Chart for Air Quality -->
-              <div class="chart-item">
-                <canvas id="airQualityChart"></canvas>
-              </div>
-              <!-- Gauge Chart for Temperature -->
-              <div class="chart-item">
-                <canvas id="gaugeChart"></canvas>
-              </div>
+            <!-- Bar Chart for Air Quality -->
+            <div class="chart-item">
+              <canvas id="airQualityChart"></canvas>
+            </div>
+            <!-- Gauge Chart for Temperature -->
+            <div class="chart-item">
+              <canvas id="gaugeChart"></canvas>
             </div>
           </div>
         </div>
-      </main>
-    </div>
-  </body>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Sample data for the current month
+    const currentData = {
+      soilMoisture: 65,
+      airQuality: 75,
+      temperature: 22
+    };
+
+    // Bar Chart for Soil Moisture
+    new Chart(document.getElementById('soilMoistureChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Soil Moisture'],
+        datasets: [
+          {
+            label: 'Soil Moisture (%)',
+            data: [currentData.soilMoisture],
+            backgroundColor: '#006400', // Dark green
+            borderColor: '#004d00',
+            borderWidth: 1,
+            barThickness: 40
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Bar Chart for Air Quality
+    new Chart(document.getElementById('airQualityChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Air Quality'],
+        datasets: [
+          {
+            label: 'Air Quality (AQI)',
+            data: [currentData.airQuality],
+            backgroundColor: '#9ACD32', // Light green
+            borderColor: '#228B22',
+            borderWidth: 1,
+            barThickness: 40
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Doughnut Chart as Gauge for Temperature (Smaller Size)
+    new Chart(document.getElementById('gaugeChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Temperature'],
+        datasets: [
+          {
+            data: [currentData.temperature, 40 - currentData.temperature], // Showing temperature and the difference from 40
+            backgroundColor: ['#FF5733', '#e0e0e0'], // Red for temperature, grey for remaining
+            borderWidth: 0
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        circumference: 180, // Semi-circle
+        rotation: -90, // Start from the top
+        cutout: '70%', // Makes the doughnut look like a gauge
+        plugins: {
+          tooltip: {
+            enabled: false
+          },
+          datalabels: {
+            display: false
+          }
+        }
+      }
+    });
+  </script>
+</body>
 </html>
