@@ -182,8 +182,10 @@ public class mainController {
 	}
 	
 	@PostMapping("/addNotice")
-	public String addNotice(@ModelAttribute Notice n) {
+	public String addNotice(@ModelAttribute Notice n, Model model) {
 		nRepo.save(n);
+		List<Notice> notice = nRepo.findAll();
+		model.addAttribute("notice", notice);
 		return "superAdmin/notice.html";
 	}
 	

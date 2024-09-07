@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard with Data Visualization</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .data-container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      background-color: #fff;
+      margin-bottom: 20px;
+    }
+    .data-container h2 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    .chart-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+    .chart-item {
+      flex: 1;
+      max-width: calc(33.333% - 20px); /* Ensures three charts fit in a row with gap */
+      height: 300px; /* Adjust as needed */
+    }
+    .summary {
+      margin-bottom: 20px;
+    }
+    canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 0;
+    }
+    .faq-question {
+      cursor: pointer;
+    }
+    .faq-answer {
+      padding-top: 0.5rem;
+    }
+    .language-switcher {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .language-button {
+      border: 1px solid #ddd;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      text-align: center;
+    }
+    .active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+     <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+      <!-- Sidebar Header -->
+      <div class="px-4 py-6 flex items-center justify-between">
+        <div class="flex items-center cursor-pointer">
+          <span class="text-lg font-semibold">Farmer Panel</span>
+        </div>
+        <!-- Sidebar toggle button -->
+        <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <!-- Sidebar Items -->
+      <nav class="flex-grow hidden lg:block">
+        <ul class="space-y-2">
+          <li class="px-4 py-2 flex items-center active">
+            <i class="fas fa-home mr-2"></i>
+            <span><a href="/farmerDash" class="text-blue-100">Dashboard</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            <span><a href="/raiseComplain" class="text-blue-100">Register a Complaint</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-trash mr-2"></i>
+            <span><a href="removeDeviceReq" class="text-blue-100">Request Device Removal</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-bell mr-2"></i>
+            <span><a href="/farmerNotice" class="text-blue-100">Farmer Notices</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center sidebar">
+            <i class="fas fa-question-circle mr-2"></i>
+            <span><a href="/faq" class="text-blue-100">FAQ</a></span>
+        </li>
+        </ul>
+      </nav>
+    </aside>
+<body class="bg-blue-100">
+  <div class="faq-container">
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+      <div id="englishButton" class="language-button active">English</div>
+      <div id="nepaliButton" class="language-button">Nepali</div>
+    </div>
+
+    <!-- FAQ Content -->
+    <div id="faqContent" class="faq-content">
+      <!-- English FAQ -->
+      <div id="faqEnglish" class="faq-language">
+        <div class="faq-item">
+          <div class="faq-question">What is crop rotation and why is it important?</div>
+          <div class="faq-answer">
+            <p>Crop rotation is the practice of growing different types of crops in the same area in sequential seasons. It helps in managing soil fertility, reducing soil erosion, and controlling pests and diseases.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How can I improve soil fertility?</div>
+          <div class="faq-answer">
+            <p>Soil fertility can be improved by adding organic matter like compost, using cover crops, rotating crops, and testing soil regularly to address any deficiencies.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What are the best practices for irrigation?</div>
+          <div class="faq-answer">
+            <p>Effective irrigation practices include using drip irrigation systems, watering early in the morning to reduce evaporation, and ensuring proper soil drainage.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How can I control pests organically?</div>
+          <div class="faq-answer">
+            <p>Organic pest control methods include using natural predators, companion planting, and applying organic pesticides made from natural ingredients.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What is the importance of biodiversity in agriculture?</div>
+          <div class="faq-answer">
+            <p>Biodiversity in agriculture helps in maintaining ecosystem balance, enhancing soil health, and increasing resilience to pests and diseases.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nepali FAQ -->
+      <div id="faqNepali" class="faq-language hidden">
+        <div class="faq-item">
+          <div class="faq-question">क्रप रोटेशन के हो र यो किन महत्त्वपूर्ण छ?</div>
+          <div class="faq-answer">
+            <p>क्रप रोटेशन भनेको एकै क्षेत्रमा भिन्न प्रकारका फसलहरूलाई क्रमिक सिजनहरूमा लगाउने अभ्यास हो। यसले माटोको उर्वरता व्यवस्थापन गर्न, माटोको क्षति कम गर्न, र कीराहरू र रोगहरूको नियन्त्रणमा मद्दत गर्दछ।</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">माटोको उर्वरता कसरी सुधार गर्न सक्छु?</div>
+          <div class="faq-answer">
+            <p>माटोको उर्वरता सुधार गर्नको लागि जैविक पदार्थहरू जस्तै कम्पोस्ट थप्नु, कभर क्रपहरूको प्रयोग गर्नु, फसलहरूको घुमाउने प्रयोग गर्नु, र नियमित रूपमा माटोको परीक्षण गर्नु पर्छ।</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">सिँचाइका लागि उत्कृष्ट अभ्यासहरू के हुन्?</div>
+          <div class="faq-answer">
+            <p>सिँचाइका प्रभावकारी अभ्यासहरूमा ड्रिप सिँचाइ प्रणालीको प्रयोग, अर्धपातली साँचो गर्न बिहानको समयमा पानी दिनु, र माटोको सही निकास सुनिश्चित गर्नु समावेश छ।</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">मैले जैविक रूपमा कीरा नियन्त्रण कसरी गर्न सक्छु?</div>
+          <div class="faq-answer">
+            <p>जैविक कीरा नियन्त्रणका विधिहरूमा प्राकृतिक शिकारिहरूको प्रयोग, साथी बिरुवाको प्रयोग, र प्राकृतिक सामग्रीबाट बनेको जैविक कीटाणुनाशक लागू गर्नु समावेश छ।</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">कृषिमा जैव विविधता महत्त्वपूर्ण किन छ?</div>
+          <div class="faq-answer">
+            <p>कृषिमा जैव विविधता पारिस्थितिक तन्तुको सन्तुलन कायम राख्न, माटोको स्वास्थ्य बढाउन, र कीराहरू र रोगहरूको प्रतिरोध क्षमता बढाउन मद्दत गर्दछ।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('englishButton').addEventListener('click', function() {
+      document.getElementById('faqEnglish').classList.remove('hidden');
+      document.getElementById('faqNepali').classList.add('hidden');
+      this.classList.add('active');
+      document.getElementById('nepaliButton').classList.remove('active');
+    });
+
+    document.getElementById('nepaliButton').addEventListener('click', function() {
+      document.getElementById('faqNepali').classList.remove('hidden');
+      document.getElementById('faqEnglish').classList.add('hidden');
+      this.classList.add('active');
+      document.getElementById('englishButton').classList.remove('active');
+    });
+  </script>
+</body>
+</html>
