@@ -13,9 +13,15 @@
       rel="stylesheet"
     />
     <style>
-
-
-
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+      /* Additional CSS for responsiveness */
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      .active {
+        background-color: rgb(14, 172, 122);
+        color: rgb(255, 255, 255);
+      }
     </style>
   </head>
   <body class="bg-blue-100">
@@ -66,8 +72,10 @@
         </ul>
       </nav>
     </aside>
-       <!-- Main Content -->
-       <main class="flex-grow p-4 lg:p-8">
+    
+
+      <!-- Main Content -->
+      <main class="flex-grow p-4 lg:p-8">
         <div class="max-w-6xl mx-auto">
           <h1 class="text-3xl font-semibold text-gray-800 mb-4">Manage Devices</h1>
 
@@ -106,4 +114,20 @@
         </div>
       </main>
     </div>
+
+    <script>
+      // Handle form submission
+      document.getElementById("submitButton").addEventListener("click", function () {
+        const selectedDevice = document.getElementById("deviceSelect").value;
+        const reason = document.getElementById("reasonInput").value.trim();
+
+        if (reason) {
+          alert(`Device: ${selectedDevice}, Reason: ${reason}`);
+          // You can handle the form submission logic here, like sending data to the server.
+        } else {
+          alert("Please enter a reason.");
+        }
+      });
+    </script>
+  </body>
 </html>
