@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,8 +124,12 @@ public class mainController {
 	public String addUser() {
 		return "superAdmin/adduser.html";
 	}
+	
 	@GetMapping("/viewDevice")
-	public String viewDevice() {
+	public String viewDevice(HttpSession session, Model model) {
+		List<newDevices> ndList = ndRepo.findAll();
+		session.setAttribute("device",ndList);
+		model.addAttribute("device",ndList);
 		return "superAdmin/map.html";
 	}
 	

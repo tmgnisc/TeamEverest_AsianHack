@@ -111,8 +111,19 @@
 
       <!-- Main Content -->
       <main class="flex-grow p-4 lg:p-8">
+		<div th:each="device : ${device}">
+		    <h2 th:text="${device.latitude}">Latitude</h2>
+		    <h2 th:text="${device.longitude}">Longitude</h2>
+		    <h2 th:text="${device.deviceId}">Device ID</h2>
+		</div>
+
+
         <div id="map"></div>
       </main>
+      
+      
+      
+      
     </div>
 
     <!-- Chart.js -->
