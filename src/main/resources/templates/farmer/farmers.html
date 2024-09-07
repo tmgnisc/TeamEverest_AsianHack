@@ -103,6 +103,15 @@
             <p><strong>Air Quality:</strong> The air quality index (AQI) this month is 75, which is considered good.</p>
           </div>
           
+         <div th:each="d : ${adList}">
+		    <p th:text="${d.co2}"></p>
+		    <p th:text="${d.date}"></p>
+		    <p th:text="${d.humidity}"></p>
+		    <p th:text="${d.nh3}"></p>
+		    <p th:text="${d.soilmoisture}"></p>
+		    <p th:text="${d.temperature}"></p>
+		</div>
+          
           <!-- Data Visualization -->
           <h2>Combined Data Visualization</h2>
           <div class="chart-container">

@@ -1,6 +1,7 @@
 package com.smartagro.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class farmerController {
 	@GetMapping("/farmerDash")
 	public String farmerDash(@ModelAttribute alldata ad, Model model) {
 		
-		List<alldata> adList =  adRepo.findAll();
+		List<alldata> adList = adRepo.findTopByOrderByDateDesc();
 		
 		model.addAttribute("adList", adList);
 		
