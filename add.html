@@ -70,3 +70,21 @@
         <h1 class="text-2xl font-semibold">Add Device</h1>
         <!-- Map with adjusted size -->
         <div id="map"></div>
+        <div id="formContainer">
+            <form id="dustbinForm">
+              <input
+                type="text"
+                id="latitudeInput"
+                placeholder="Latitude"
+                readonly
+              />
+              <input
+                type="text"
+                id="longitudeInput"
+                placeholder="Longitude"
+                readonly
+              />
+              <input type="text" id="dustbinIdInput" placeholder="Device ID" />
+              <button type="submit" id="confirmButton">Confirm</button>
+            </form>
+          </div>
