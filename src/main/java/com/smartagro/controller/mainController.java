@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.smartagro.model.User;
 import com.smartagro.repository.userRepository;
@@ -41,16 +42,17 @@ public class mainController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute User u, Model model, HttpSession session) {
 		if(uRepo.existsByUsernameAndPassword(u.getUsername(), DigestUtils.shaHex(u.getPassword()))) {
-				String email = uRepo.findEmailByUsername(u.getUsername());
+		
+
 				
-			
 				session.setAttribute("username", u.getUsername());
-				model.addAttribute("email", email);
+				
 				System.out.println(session.getAttribute("username"));
 				session.setMaxInactiveInterval(1800);
 				
 				return "test.html"; 
 			}
+			
 		return "index.html";
 		}
 		
