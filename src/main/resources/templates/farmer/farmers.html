@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,14 +31,20 @@
     }
     .chart-container {
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
       justify-content: space-between;
+      gap: 20px; /* Gap between charts */
+      margin-top: 20px;
     }
     .chart-item {
-      flex: 1;
-      max-width: calc(33.333% - 20px); /* Ensures three charts fit in a row with gap */
-      height: 300px; /* Adjust as needed */
+      flex: 1; /* Allows charts to grow and fill the available space */
+      max-width: 300px; /* Set maximum width for the chart containers */
+      height: 250px; /* Adjust height as needed */
+    }
+    .bar-chart-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px; /* Gap between bar charts */
+      margin-top: 20px;
     }
     .summary {
       margin-bottom: 20px;
@@ -85,7 +91,7 @@
           <li class="px-4 py-2 flex items-center sidebar">
             <i class="fas fa-question-circle mr-2"></i>
             <span><a href="/faq" class="text-blue-100">FAQ</a></span>
-        </li>
+          </li>
         </ul>
       </nav>
     </aside>
@@ -98,107 +104,61 @@
         <!-- Textual Summary -->
         <div class="data-container">
           <div class="summary">
-            <p><strong>Soil Moisture:</strong> The soil moisture level for this month is at 65%, which is optimal for crops.</p>
-            <p><strong>Temperature:</strong> The temperature for this month is 22°C, which is suitable for current crops.</p>
+            <p><strong>Soil Moisture:</strong> The soil moisture level for this month is at <span th:text="${adList[0].soilmoisture}">65</span>%, which is optimal for crops.</p>
+            <p><strong>Temperature:</strong> The temperature for this month is <span th:text="${adList[0].temperature}">25</span>°C, which is suitable for current crops.</p>
             <p><strong>Air Quality:</strong> The air quality index (AQI) this month is 75, which is considered good.</p>
           </div>
           
-         <div th:each="d : ${adList}">
-		    <p th:text="${d.co2}"></p>
-		    <p th:text="${d.date}"></p>
-		    <p th:text="${d.humidity}"></p>
-		    <p th:text="${d.nh3}"></p>
-		    <p th:text="${d.soilmoisture}"></p>
-		    <p th:text="${d.temperature}"></p>
-		</div>
-          
           <!-- Data Visualization -->
-          <h2>Combined Data Visualization</h2>
+          <h2>Temperature and Soil Moisture Visualization</h2>
           <div class="chart-container">
-            <!-- Bar Chart for Soil Moisture -->
-            <div class="chart-item">
-              <canvas id="soilMoistureChart"></canvas>
-            </div>
-            <!-- Bar Chart for Air Quality -->
-            <div class="chart-item">
-              <canvas id="airQualityChart"></canvas>
-            </div>
             <!-- Gauge Chart for Temperature -->
             <div class="chart-item">
               <canvas id="gaugeChart"></canvas>
+            </div>
+            <!-- Doughnut Chart for Soil Moisture -->
+            <div class="chart-item">
+              <canvas id="soilMoistureChart"></canvas>
+            </div>
+          </div>
+ 
+          <!-- New Bar Charts for CO2, NH3, Benzene -->
+          <h2>Air Quality Data (CO2, NH3, Benzene)</h2>
+          <div class="bar-chart-container">
+            <div class="chart-item">
+              <canvas id="co2Chart"></canvas>
+            </div>
+            <div class="chart-item">
+              <canvas id="nh3Chart"></canvas>
+            </div>
+            <div class="chart-item">
+              <canvas id="benzeneChart"></canvas>
             </div>
           </div>
         </div>
       </div>
     </main>
   </div>
-
-  <script>
+ 
+  <script th:inline="javascript">
+    /*<![CDATA[*/
     // Sample data for the current month
-    const currentData = {
-      soilMoisture: 65,
-      airQuality: 75,
-      temperature: 22
+    const adList = /*[[${adList}]]*/ [];
+
+    const currentData = adList.length > 0 ? {
+        temperature: /*[[${adList[0].temperature}]]*/ 0,
+        co2: /*[[${adList[0].co2}]]*/ 0, // Adjust these fields as needed
+        nh3: /*[[${adList[0].nh3}]]*/ 0,
+        benzene: /*[[${adList[0].benzene}]]*/ 0,
+        soilMoisture: /*[[${adList[0].soilmoisture}]]*/ 0
+    } : {
+        temperature: 0,
+        co2: 40,    // Example CO2 value
+        nh3: 30,    // Example NH3 value
+        benzene: 20, // Example Benzene value
+        soilMoisture: 65 // Example Soil Moisture value
     };
-
-    // Bar Chart for Soil Moisture
-    new Chart(document.getElementById('soilMoistureChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Soil Moisture'],
-        datasets: [
-          {
-            label: 'Soil Moisture (%)',
-            data: [currentData.soilMoisture],
-            backgroundColor: '#006400', // Dark green
-            borderColor: '#004d00',
-            borderWidth: 1,
-            barThickness: 40
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            beginAtZero: true
-          },
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
-    // Bar Chart for Air Quality
-    new Chart(document.getElementById('airQualityChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Air Quality'],
-        datasets: [
-          {
-            label: 'Air Quality (AQI)',
-            data: [currentData.airQuality],
-            backgroundColor: '#9ACD32', // Light green
-            borderColor: '#228B22',
-            borderWidth: 1,
-            barThickness: 40
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            beginAtZero: true
-          },
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
+ 
     // Doughnut Chart as Gauge for Temperature (Smaller Size)
     new Chart(document.getElementById('gaugeChart'), {
       type: 'doughnut',
@@ -216,10 +176,14 @@
         responsive: true,
         circumference: 180, // Semi-circle
         rotation: -90, // Start from the top
-        cutout: '70%', // Makes the doughnut look like a gauge
+        cutout: '80%', // Makes the doughnut look like a gauge
         plugins: {
           tooltip: {
-            enabled: false
+            callbacks: {
+              label: function(context) {
+                return 'Temperature: ' + currentData.temperature + '°C';
+              }
+            }
           },
           datalabels: {
             display: false
@@ -227,6 +191,142 @@
         }
       }
     });
+ 
+    // Doughnut Chart for Soil Moisture (Smaller Size)
+    new Chart(document.getElementById('soilMoistureChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Soil Moisture'],
+        datasets: [
+          {
+            data: [currentData.soilMoisture, 100 - currentData.soilMoisture], // Showing soil moisture and the difference
+            backgroundColor: ['#4CAF50', '#e0e0e0'], // Green for moisture, grey for dry
+            borderWidth: 0
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        circumference: 180, // Semi-circle
+        rotation: -90, // Start from the top
+        cutout: '80%', // Makes the doughnut look like a gauge
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return 'Soil Moisture: ' + currentData.soilMoisture + '%';
+              }
+            }
+          },
+          datalabels: {
+            display: false
+          }
+        }
+      }
+    });
+ 
+    // Bar Chart for CO2
+    new Chart(document.getElementById('co2Chart'), {
+      type: 'bar',
+      data: {
+        labels: ['CO2'],
+        datasets: [
+          {
+            label: 'CO2 Level',
+            data: [currentData.co2],
+            backgroundColor: ['#FF5733'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return 'CO2 Level: ' + currentData.co2;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+ 
+    // Bar Chart for NH3
+    new Chart(document.getElementById('nh3Chart'), {
+      type: 'bar',
+      data: {
+        labels: ['NH3'],
+        datasets: [
+          {
+            label: 'NH3 Level',
+            data: [currentData.nh3],
+            backgroundColor: ['#33FF57'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return 'NH3 Level: ' + currentData.nh3;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+ 
+    // Bar Chart for Benzene
+    new Chart(document.getElementById('benzeneChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Benzene'],
+        datasets: [
+          {
+            label: 'Benzene Level',
+            data: [currentData.benzene],
+            backgroundColor: ['#3357FF'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return 'Benzene Level: ' + currentData.benzene;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+    /*]]>*/
   </script>
 </body>
 </html>

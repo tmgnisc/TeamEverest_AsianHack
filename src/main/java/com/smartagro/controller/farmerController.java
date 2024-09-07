@@ -16,6 +16,8 @@ import com.smartagro.repository.newDevicesRepository;
 import com.smartagro.repository.noticeRepository;
 import com.smartagro.repository.userRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class farmerController {
 	@Autowired
@@ -32,11 +34,12 @@ public class farmerController {
 	
 	
 	@GetMapping("/farmerDash")
-	public String farmerDash(@ModelAttribute alldata ad, Model model) {
+	public String farmerDash(@ModelAttribute alldata ad, Model model, HttpSession session) {
 		
 		List<alldata> adList = adRepo.findTopByOrderByDateDesc();
 		
 		model.addAttribute("adList", adList);
+		session.setAttribute("adList", adList);
 		
 		return "farmer/farmers.html";
 	}
