@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smartagro.model.Notice;
 import com.smartagro.model.User;
 import com.smartagro.model.newDevices;
 import com.smartagro.repository.newDevicesRepository;
+import com.smartagro.repository.noticeRepository;
 import com.smartagro.repository.userRepository;
 
 import jakarta.servlet.annotation.MultipartConfig;
@@ -36,7 +38,8 @@ public class mainController {
 	@Autowired
 	private newDevicesRepository ndRepo;
 	
-	
+	@Autowired
+	private noticeRepository nRepo;
 	
 	@GetMapping("/")
 	public String adminPage() {
@@ -135,6 +138,12 @@ public class mainController {
 	
 	@GetMapping("/notice")
 	public String notice() {
+		return "superAdmin/notice.html";
+	}
+	
+	@PostMapping("/addNotice")
+	public String addNotice(@ModelAttribute Notice n) {
+		nRepo.save(n);
 		return "superAdmin/notice.html";
 	}
 	
