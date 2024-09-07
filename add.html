@@ -13,139 +13,204 @@
       rel="stylesheet"
     />
     <style>
+      /* Additional CSS for responsiveness */
+      .active {
+        background-color: #0eac7a ;
+        color: rgb(255, 255, 255);
+      }
+      @media (min-width: 1024px) {
+        .lg\\:flex {
+          display: flex;
+        }
 
+        .lg\\:hidden {
+          display: none;
+        }
+      }
     </style>
-    </head>
-    <body class="bg-green-100">
-      <div class="flex flex-col lg:flex-row h-screen">
-        <!-- Sidebar -->
-        <aside
-          class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
-        >
-          <!-- Sidebar Header -->
-          <div class="px-4 py-6 flex items-center justify-between">
-            <div class="flex items-center cursor-pointer">
-              <span class="text-lg font-semibold">Super Admin Panel</span>
-            </div>
-            <!-- Sidebar toggle button -->
-            <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
-              <!-- Use a more intuitive icon -->
-              <i class="fas fa-bars"></i>
-            </button>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <style>
+      /* Updated map size and border styling */
+      #map {
+        height: 500px; /* Adjust the height as desired */
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+
+      #formContainer {
+        top: 620px; /* Position below the map */
+        left: 10px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      input[type="text"] {
+        margin-bottom: 5px;
+        padding: 5px;
+        width: 200px;
+      }
+
+      #confirmButton {
+        padding: 5px 10px;
+        background-color: #28a745 ;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      #confirmButton:hover {
+        background-color: #37db5d ;
+      }
+    </style>
+  </head>
+  <body class="bg-green-100">
+    <div class="flex flex-col lg:flex-row h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0"
+      >
+        <!-- Sidebar Header -->
+        <div class="px-4 py-6 flex items-center justify-between">
+          <div class="flex items-center cursor-pointer">
+            <span class="text-lg font-semibold">Super Admin Panel</span>
           </div>
-          <!-- Sidebar Items -->
-          <nav class="flex-grow hidden lg:block">
-            <ul class="space-y-2">
-              <!-- Sidebar item with responsive text -->
-              <li class="px-4 py-2 flex items-center">
-                <i class="fas fa-home mr-2"></i>
-                <span><a href="adminDashboard.html">Home</a></span>
-              </li>
-              <li class="px-4 py-2 flex items-center">
-                <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
-                <span><a href="map.html">View Devices</a></span>
-              </li>
-              <li class="px-4 py-2 flex items-center">
-                <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
-                <span><a href="add.html">Add Device</a></span>
-              </li>
-              <li class="px-4 py-2 flex items-center">
-                <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
-                <span><a href="removedevice.html">Remove Device</a></span>
-              </li>
-              <li class="px-4 py-2 flex items-center">
-                <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
-                <span><a href="adduser.html">Add User</a></span>
-              </li>
-              <li class="px-4 py-2 flex items-center">
-                <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
-                <span><a href="notice.html">Notice</a></span>
-              </li>
-              
-            </ul>
-          </nav>
-        </aside>
-        <!-- Main Content -->
+          <!-- Sidebar toggle button -->
+          <button id="toggleSidebar" class="block lg:hidden focus:outline-none">
+            <!-- Use a more intuitive icon -->
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <!-- Sidebar Items -->
+        <nav class="flex-grow hidden lg:block">
+          <ul class="space-y-2">
+            <!-- Sidebar item with responsive text -->
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-home mr-2"></i>
+              <span><a href="adminDashboard.html">Home</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
+              <span><a href="map.html">View Devices</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
+              <span><a href="add.html">Add Device</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
+              <span><a href="removedevice.html">Remove Device</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
+              <span><a href="adduser.html">Add User</a></span>
+            </li>
+            <li class="px-4 py-2 flex items-center">
+              <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
+              <span><a href="notice.html">Notice</a></span>
+            </li>
+            
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
       <main class="flex-grow p-4 lg:p-8">
         <h1 class="text-2xl font-semibold">Add Device</h1>
         <!-- Map with adjusted size -->
         <div id="map"></div>
+
+        <!-- Form for entering Dustbin ID -->
         <div id="formContainer">
-            <form id="dustbinForm">
-              <input
-                type="text"
-                id="latitudeInput"
-                placeholder="Latitude"
-                readonly
-              />
-              <input
-                type="text"
-                id="longitudeInput"
-                placeholder="Longitude"
-                readonly
-              />
-              <input type="text" id="dustbinIdInput" placeholder="Device ID" />
-              <button type="submit" id="confirmButton">Confirm</button>
-            </form>
-          </div>
-          <script>
-            var map = L.map("map");
-            map.setView([51.505, -0.09], 13);
-  
-            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              maxZoom: 19,
-              attribution:
-                '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            }).addTo(map);
-  
-            navigator.geolocation.watchPosition(success, error);
-            let marker, zoomed, routingControl;
-  
-            function success(pos) {
-              const userLat = pos.coords.latitude;
-              const userLng = pos.coords.longitude;
-  
-              if (marker) {
-                map.removeLayer(marker);
-              }
-  
-              map.setView([userLat, userLng]);
-              marker = L.marker([userLat, userLng]).addTo(map);
+          <form id="dustbinForm">
+            <input
+              type="text"
+              id="latitudeInput"
+              placeholder="Latitude"
+              readonly
+            />
+            <input
+              type="text"
+              id="longitudeInput"
+              placeholder="Longitude"
+              readonly
+            />
+            <input type="text" id="dustbinIdInput" placeholder="Device ID" />
+            <button type="submit" id="confirmButton">Confirm</button>
+          </form>
+        </div>
+
+        <script>
+          var map = L.map("map");
+          map.setView([51.505, -0.09], 13);
+
+          L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution:
+              '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          }).addTo(map);
+
+          navigator.geolocation.watchPosition(success, error);
+          let marker, zoomed, routingControl;
+
+          function success(pos) {
+            const userLat = pos.coords.latitude;
+            const userLng = pos.coords.longitude;
+
+            if (marker) {
+              map.removeLayer(marker);
             }
-  
-            function error(err) {
-              if (err === 1) {
-                alert("Please allow geolocation access");
-              } else {
-                alert("Cannot get current location");
-              }
+
+            map.setView([userLat, userLng]);
+            marker = L.marker([userLat, userLng]).addTo(map);
+          }
+
+          function error(err) {
+            if (err === 1) {
+              alert("Please allow geolocation access");
+            } else {
+              alert("Cannot get current location");
             }
-  
-            // Function to update the coordinates input fields when the map is clicked
-            function showCoordinates(e) {
-              const { lat, lng } = e.latlng;
-              document.getElementById("latitudeInput").value = lat.toFixed(6);
-              document.getElementById("longitudeInput").value = lng.toFixed(6);
-            }
-  
-            map.on("click", showCoordinates); // Add click event listener to the map
-  
-            // Form submission handler
-            document
-              .getElementById("dustbinForm")
-              .addEventListener("submit", function (e) {
-                e.preventDefault(); // Prevent the default form submission
-                const dustbinId = document.getElementById("dustbinIdInput").value;
-                const latitude = document.getElementById("latitudeInput").value;
-                const longitude = document.getElementById("longitudeInput").value;
-                alert(
-                  `Dustbin ID: ${dustbinId}, Latitude: ${latitude}, Longitude: ${longitude}`
-                );
-                // You can add your logic here to handle the form submission
-                // For now, it just shows an alert with the entered values
-              });
-          </script>
-      </div>
-  </main>
-    </body>
-  </html>
+          }
+
+          // Function to update the coordinates input fields when the map is clicked
+          function showCoordinates(e) {
+            const { lat, lng } = e.latlng;
+            document.getElementById("latitudeInput").value = lat.toFixed(6);
+            document.getElementById("longitudeInput").value = lng.toFixed(6);
+          }
+
+          map.on("click", showCoordinates); // Add click event listener to the map
+
+          // Form submission handler
+          document
+            .getElementById("dustbinForm")
+            .addEventListener("submit", function (e) {
+              e.preventDefault(); // Prevent the default form submission
+              const dustbinId = document.getElementById("dustbinIdInput").value;
+              const latitude = document.getElementById("latitudeInput").value;
+              const longitude = document.getElementById("longitudeInput").value;
+              alert(
+                `Dustbin ID: ${dustbinId}, Latitude: ${latitude}, Longitude: ${longitude}`
+              );
+              // You can add your logic here to handle the form submission
+              // For now, it just shows an alert with the entered values
+            });
+        </script>
+    </div>
+</main>
+  </body>
+</html>
