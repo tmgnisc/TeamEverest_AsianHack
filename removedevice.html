@@ -66,5 +66,44 @@
         </ul>
       </nav>
     </aside>
-    
+       <!-- Main Content -->
+       <main class="flex-grow p-4 lg:p-8">
+        <div class="max-w-6xl mx-auto">
+          <h1 class="text-3xl font-semibold text-gray-800 mb-4">Manage Devices</h1>
+
+          <!-- Device Selection Form -->
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <label for="deviceSelect" class="block text-lg font-semibold mb-2">
+              Select Device:
+            </label>
+            <select
+              id="deviceSelect"
+              class="block w-full px-4 py-2 border rounded-lg mb-4"
+            >
+              <option value="device1">Device 1 (ID: 123)</option>
+              <option value="device2">Device 2 (ID: 456)</option>
+              <option value="device3">Device 3 (ID: 789)</option>
+              <!-- Add more devices as needed -->
+            </select>
+
+            <label for="reasonInput" class="block text-lg font-semibold mb-2">
+              Reason:
+            </label>
+            <input
+              type="text"
+              id="reasonInput"
+              class="block w-full px-4 py-2 border rounded-lg mb-4"
+              placeholder="Enter the reason here"
+            />
+
+            <button
+              id="submitButton"
+              class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
 </html>
