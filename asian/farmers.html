@@ -31,16 +31,19 @@
     }
     .chart-container {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      gap: 20px; /* Gap between charts */
       margin-top: 20px;
     }
     .chart-item {
-      width: 300px;
-      height: 300px;
+      flex: 1; /* Allows charts to grow and fill the available space */
+      max-width: 300px; /* Set maximum width for the chart containers */
+      height: 250px; /* Adjust height as needed */
     }
     .bar-chart-container {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
+      gap: 20px; /* Gap between bar charts */
       margin-top: 20px;
     }
     .summary {
@@ -107,11 +110,15 @@
           </div>
           
           <!-- Data Visualization -->
-          <h2>Temperature Visualization</h2>
+          <h2>Temperature and Soil Moisture Visualization</h2>
           <div class="chart-container">
             <!-- Gauge Chart for Temperature -->
             <div class="chart-item">
               <canvas id="gaugeChart"></canvas>
+            </div>
+            <!-- Doughnut Chart for Soil Moisture -->
+            <div class="chart-item">
+              <canvas id="soilMoistureChart"></canvas>
             </div>
           </div>
 
@@ -139,7 +146,8 @@
       temperature: 22,
       co2: 40,    // Example CO2 value
       nh3: 30,    // Example NH3 value
-      benzene: 20 // Example Benzene value
+      benzene: 20, // Example Benzene value
+      soilMoisture: 65 // Example Soil Moisture value
     };
 
     // Doughnut Chart as Gauge for Temperature (Smaller Size)
@@ -159,7 +167,36 @@
         responsive: true,
         circumference: 180, // Semi-circle
         rotation: -90, // Start from the top
-        cutout: '70%', // Makes the doughnut look like a gauge
+        cutout: '80%', // Makes the doughnut look like a gauge
+        plugins: {
+          tooltip: {
+            enabled: false
+          },
+          datalabels: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // Doughnut Chart for Soil Moisture (Smaller Size)
+    new Chart(document.getElementById('soilMoistureChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Soil Moisture'],
+        datasets: [
+          {
+            data: [currentData.soilMoisture, 100 - currentData.soilMoisture], // Showing soil moisture and the difference
+            backgroundColor: ['#4CAF50', '#e0e0e0'], // Green for moisture, grey for dry
+            borderWidth: 0
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        circumference: 180, // Semi-circle
+        rotation: -90, // Start from the top
+        cutout: '80%', // Makes the doughnut look like a gauge
         plugins: {
           tooltip: {
             enabled: false
