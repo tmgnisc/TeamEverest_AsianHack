@@ -58,6 +58,9 @@ public class farmerController {
 	@GetMapping("/farmerNotice")
 	public String farmerNotice(Model model) {
 		
+		List<Complains> cList = cRepo.findBySuggestionIsNotNull();
+		model.addAttribute("cList", cList);
+		
 		List<Notice> notice = nRepo.findAll();
 		model.addAttribute("notice", notice);
 		return "farmer/farmernotice.html";

@@ -118,6 +118,20 @@
                     </div>
                     
                 </div>
+                
+                <div class="notice-container">
+                    <h2>Complain Responses</h2>
+                    <div th:each="complaint : ${cList}" class="bg-white shadow-md p-4 rounded-lg">
+						  <h2 class="text-xl font-semibold">Farmer: <span th:text="${complaint.name}"></span></h2>
+						  <p class="mt-2"><strong>Complaint:</strong> <span th:text="${complaint.description}"></span></p>
+						  <br>
+						  
+						   <h2 class="text-xl font-semibold">Expert Group:</h2>
+						  <p class="mt-2"><strong>Suggestion:</strong> <span th:text="${complaint.suggestion}"></span></p>
+						
+					</div>
+                    
+                </div>
             </div>
         </main>
     </div>

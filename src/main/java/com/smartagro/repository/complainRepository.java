@@ -9,6 +9,8 @@ public interface complainRepository extends JpaRepository<Complains, Integer>{
 	
 	List<Complains> findBySuggestionIsNull();
 	
+	List<Complains> findBySuggestionIsNotNull();
+	
 	
 
 
