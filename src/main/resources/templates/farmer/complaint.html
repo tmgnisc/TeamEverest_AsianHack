@@ -86,18 +86,18 @@
         <main class="flex-grow flex items-center justify-center p-8">
             <div class="form-container">
                 <h2><i class="fas fa-exclamation-circle"></i> Register a Complaint</h2>
-                <form class="bg-white rounded-lg">
+                <form class="bg-white rounded-lg" action="/registerComplains" method="post">
                     <div class="mb-3">
-                        <label for="farmerName" class="block text-gray-700 mb-1">Farmer Name</label>
-                        <input type="text" id="farmerName" name="farmerName" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter your name" required>
+                        <label for="farmerName"class="block text-gray-700 mb-1">Farmer Name</label>
+                        <input type="text" id="farmerName" name="name" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter your name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="farmerEmail" class="block text-gray-700 mb-1">Email Address</label>
+                        <label for="farmerEmail"  name="email" class="block text-gray-700 mb-1">Email Address</label>
                         <input type="email" id="farmerEmail" name="farmerEmail" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
                         <label for="complaintType" class="block text-gray-700 mb-1">Complaint Type</label>
-                        <select id="complaintType" name="complaintType" class="w-full px-3 py-2 border rounded-lg" required>
+                        <select id="complaintType" name="complaintype" class="w-full px-3 py-2 border rounded-lg" required>
                             <option value="">Select complaint type</option>
                             <option value="Technical Issue">Technical Issue</option>
                             <option value="Crop Disease">Crop Disease</option>
@@ -111,7 +111,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="assignTo" class="block text-gray-700 mb-1">Assign To</label>
-                        <select id="assignTo" name="assignTo" class="w-full px-3 py-2 border rounded-lg" required>
+                        <select id="assignTo" name="assignto" class="w-full px-3 py-2 border rounded-lg" required>
                             <option value="">Select user/department</option>
                             <option value="Technical Support">Technical Support</option>
                             <option value="Agricultural Expert">Agricultural Expert</option>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="issueImage" class="block text-gray-700 mb-1">Upload Image</label>
-                        <input type="file" id="issueImage" name="issueImage" accept="image/*" class="w-full px-3 py-2 border rounded-lg" required>
+                        <input type="file" id="issueImage" name="image" accept="image/*" class="w-full px-3 py-2 border rounded-lg" >
                     </div>
                     <div class="flex justify-end">
                         <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg">Submit Complaint</button>

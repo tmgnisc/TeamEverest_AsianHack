@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.smartagro.model.Complains;
 import com.smartagro.model.Notice;
 import com.smartagro.model.User;
 import com.smartagro.model.newDevices;
+import com.smartagro.repository.complainRepository;
 import com.smartagro.repository.newDevicesRepository;
 import com.smartagro.repository.noticeRepository;
 import com.smartagro.repository.userRepository;
@@ -41,6 +44,10 @@ public class mainController {
 	
 	@Autowired
 	private noticeRepository nRepo;
+	
+	@Autowired
+	private complainRepository cRepo;
+	
 	
 	@GetMapping("/")
 	public String adminPage() {
@@ -196,9 +203,15 @@ public class mainController {
 	}
 	
 	@GetMapping("/viewComplains")
-	public String viewComplains() {
+	public String viewComplains(Model model) {
+		List<Complains> cList = cRepo.findAll();
+		model.addAttribute("cList", cList);
+		
 		return "superAdmin/viewcomplaint.html";
 	}
+	
+	
+	
 	
 	
 	
