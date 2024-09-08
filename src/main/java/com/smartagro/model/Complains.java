@@ -20,6 +20,8 @@ public class Complains {
 	private String assignto;
 	
 	private String image;
+	
+	private String suggestion;
 
 	public int getId() {
 		return id;
@@ -67,6 +69,14 @@ public class Complains {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getSuggestion() {
+		return suggestion;
+	}
+
+	public void setSuggestion(String suggestion) {
+		this.suggestion = suggestion;
 	}
 	
 	

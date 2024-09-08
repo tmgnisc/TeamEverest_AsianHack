@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,14 +205,33 @@ public class mainController {
 	
 	@GetMapping("/viewComplains")
 	public String viewComplains(Model model) {
-		List<Complains> cList = cRepo.findAll();
+		List<Complains> cList = cRepo.findBySuggestionIsNull();
 		model.addAttribute("cList", cList);
 		
 		return "superAdmin/viewcomplaint.html";
 	}
 	
 	
-	
+	@PostMapping("/submitSuggestion")
+	public String submitSuggestion(@RequestParam("complaintId") int complaintId,
+	                                @RequestParam("suggestion") String suggestion,
+	                                Model model) {
+	    // Find the complaint by ID
+	    Complains complaint = cRepo.findById(complaintId)
+	                               .orElseThrow(() -> new IllegalArgumentException("Invalid complaint ID: " + complaintId));
+	    
+	    // Update the suggestion field
+	    complaint.setSuggestion(suggestion);
+	    
+	    // Save the updated complaint back to the repository
+	    cRepo.save(complaint);
+	    
+	    // Retrieve the updated list of complaints
+	    List<Complains> cList = cRepo.findAll();
+	    model.addAttribute("cList", cList);
+	    
+	    return "superAdmin/viewcomplaint.html";
+	}
 	
 	
 	
