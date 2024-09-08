@@ -1,33 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Panel</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-      /* Additional CSS for responsiveness */
-      * {
-        font-family: "Poppins", sans-serif;
-      }
-      .active {
-        background-color: rgb(14, 172, 122);
-        color: rgb(255, 255, 255);
-      }
-    </style>
-  </head>
-  <body class="bg-blue-100">
-    <div class="flex flex-col lg:flex-row h-screen">
-      <!-- Sidebar -->
-       <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+    .active {
+      background-color: rgb(14, 172, 122);
+      color: rgb(255, 255, 255);
+    }
+    .search-container {
+      margin-bottom: 20px;
+    }
+    .search-input {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f4f4f4;
+      font-weight: 600;
+    }
+    .approved-button {
+      background-color: #28a745; /* Green color */
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body class="bg-blue-100">
+  <div class="flex flex-col lg:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside class="bg-green-600 text-blue-100 w-full lg:w-64 xl:w-72 flex-shrink-0">
       <!-- Sidebar Header -->
       <div class="px-4 py-6 flex items-center justify-between">
         <div class="flex items-center cursor-pointer">
@@ -41,94 +71,98 @@
       <!-- Sidebar Items -->
       <nav class="flex-grow hidden lg:block">
         <ul class="space-y-2">
-          <!-- Sidebar item with responsive text -->
-           <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-home mr-2"></i>
-              <span><a href="/superAdmin">Home</a></span>
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-map-marker-alt mr-2"></i> <!-- Map/Location Icon -->
-              <span><a href="/viewDevice">View Devices</a></span>
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-plus-square mr-2"></i> <!-- Add Icon -->
-              <span><a href="/addDevice">Add Device</a></span>
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-minus-square mr-2"></i> <!-- Remove Icon -->
-              <span><a href="removedevice.html">Remove Device</a></span>
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-user-plus mr-2"></i> <!-- Add User Icon -->
-              <span><a href="/addUser">Add User</a></span>
-            </li>
-            <li class="px-4 py-2 flex items-center">
-              <i class="fas fa-bell mr-2"></i> <!-- Notice/Notification Icon -->
-              <span><a href="/notice">Notice</a></span>
-            </li>
-          <li class="px-4 py-2 flex items-center ">
-            <i class="fas fa-exclamation-circle mr-2"></i> <!-- Complaint Icon -->
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-home mr-2"></i>
+            <span><a href="/superAdmin">Home</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-map-marker-alt mr-2"></i>
+            <span><a href="/viewDevice">View Devices</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-plus-square mr-2"></i>
+            <span><a href="/addDevice">Add Device</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-minus-square mr-2"></i>
+            <span><a href="/removeDevice">Remove Device</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-user-plus mr-2"></i>
+            <span><a href="/addUser">Add User</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-bell mr-2"></i>
+            <span><a href="/notice">Notice</a></span>
+          </li>
+          <li class="px-4 py-2 flex items-center">
+            <i class="fas fa-exclamation-circle mr-2"></i>
             <span><a href="/viewComplains">View Complaint</a></span>
           </li>
         </ul>
       </nav>
     </aside>
-    
 
-      <!-- Main Content -->
-      <main class="flex-grow p-4 lg:p-8">
-        <div class="max-w-6xl mx-auto">
-          <h1 class="text-3xl font-semibold text-gray-800 mb-4">Manage Devices</h1>
+    <!-- Main Content -->
+    <main class="flex-grow p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">
+          Engaged Users
+        </h1>
 
-          <!-- Device Selection Form -->
-          <div class="bg-white p-6 rounded-lg shadow-lg">
-            <label for="deviceSelect" class="block text-lg font-semibold mb-2">
-              Select Device:
-            </label>
-            <select
-              id="deviceSelect"
-              class="block w-full px-4 py-2 border rounded-lg mb-4"
-            >
-              <option value="device1">Device 1 (ID: 123)</option>
-              <option value="device2">Device 2 (ID: 456)</option>
-              <option value="device3">Device 3 (ID: 789)</option>
-              <!-- Add more devices as needed -->
-            </select>
-
-            <label for="reasonInput" class="block text-lg font-semibold mb-2">
-              Reason:
-            </label>
-            <input
-              type="text"
-              id="reasonInput"
-              class="block w-full px-4 py-2 border rounded-lg mb-4"
-              placeholder="Enter the reason here"
-            />
-
-            <button
-              id="submitButton"
-              class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
-            >
-              Submit
-            </button>
-          </div>
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search by name..."
+          />
         </div>
-      </main>
-    </div>
 
-    <script>
-      // Handle form submission
-      document.getElementById("submitButton").addEventListener("click", function () {
-        const selectedDevice = document.getElementById("deviceSelect").value;
-        const reason = document.getElementById("reasonInput").value.trim();
+        <!-- Profile Table -->
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Device id</th>
+              <th>Reason</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="profileTableBody">
+            <!-- Example Farmer Profiles -->
+            <tr th:each="dr:${dr}">
+                <td th:text="${dr.id}"></td>
+                <td th:text="${dr.name}"></td>
+                <td th:text="${dr.deviceid}"></td>
+                <td th:text="${dr.reason}"></td>
+                <td>
+                  <button
+                    class="approve-button bg-blue-500 text-white px-4 py-2 rounded"
+                    data-id="${dr.id}"
+                    onclick="approveAction(this)"
+                  >
+                    Approve
+                  </button>
+                </td>
+            </tr>
+            <!-- More profiles can be added here -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
 
-        if (reason) {
-          alert(`Device: ${selectedDevice}, Reason: ${reason}`);
-          // You can handle the form submission logic here, like sending data to the server.
-        } else {
-          alert("Please enter a reason.");
-        }
-      });
-    </script>
-  </body>
+  <script>
+    function approveAction(button) {
+      // Change button text and style
+      button.textContent = 'Approved';
+      button.classList.remove('bg-blue-500');
+      button.classList.add('approved-button');
+      button.disabled = true; // Make the button read-only
+    }
+  </script>
+</body>
 </html>

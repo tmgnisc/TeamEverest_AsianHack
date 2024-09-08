@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.smartagro.model.Complains;
+import com.smartagro.model.DeviceRequestRemoval;
 import com.smartagro.model.Notice;
 import com.smartagro.model.alldata;
+import com.smartagro.model.newDevices;
+import com.smartagro.repository.DeviceRemoveRepository;
 import com.smartagro.repository.allDataRepository;
 import com.smartagro.repository.complainRepository;
 import com.smartagro.repository.newDevicesRepository;
@@ -37,6 +40,9 @@ public class farmerController {
 	
 	@Autowired
 	private complainRepository cRepo;
+	
+	@Autowired
+	private DeviceRemoveRepository drrRepo;
 	
 	
 	@GetMapping("/farmerDash")
@@ -68,8 +74,18 @@ public class farmerController {
 
 	
 	@GetMapping("/removeDeviceReq")
-	public String removeDevice() {
+	public String removeDevice(Model model) {
+		List<newDevices> nd = ndRepo.findAll();
+		model.addAttribute("nd", nd);
+		
 		return "farmer/removedev.html";
+	}
+	
+	@PostMapping("/requestDeviceRemoval")
+	public String requestDeviceRemoval(@ModelAttribute DeviceRequestRemoval drr) {
+		drrRepo.save(drr);
+		return "farmer/removedev.html";
+		
 	}
 	
 	@GetMapping("/raiseComplain")

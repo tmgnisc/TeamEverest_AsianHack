@@ -13,20 +13,17 @@ public class DeviceRequestRemoval {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	private int deviceid;
+	private String deviceid;
 	private String reason;
+	
+	private String status;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getDeviceid() {
-		return deviceid;
-	}
-	public void setDeviceid(int deviceid) {
-		this.deviceid = deviceid;
-	}
+	
 	public String getReason() {
 		return reason;
 	}
@@ -39,6 +36,19 @@ public class DeviceRequestRemoval {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getDeviceid() {
+		return deviceid;
+	}
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 	
 	

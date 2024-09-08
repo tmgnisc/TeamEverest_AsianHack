@@ -23,9 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.smartagro.model.Complains;
+import com.smartagro.model.DeviceRequestRemoval;
 import com.smartagro.model.Notice;
 import com.smartagro.model.User;
 import com.smartagro.model.newDevices;
+import com.smartagro.repository.DeviceRemoveRepository;
 import com.smartagro.repository.complainRepository;
 import com.smartagro.repository.newDevicesRepository;
 import com.smartagro.repository.noticeRepository;
@@ -48,6 +50,9 @@ public class mainController {
 	
 	@Autowired
 	private complainRepository cRepo;
+	
+	@Autowired
+	private DeviceRemoveRepository drRepo;
 	
 	
 	@GetMapping("/")
@@ -199,7 +204,30 @@ public class mainController {
 	
 	
 	@GetMapping("/removeDevice")
-	public String removeDevice() {
+	public String removeDevice(Model model) {
+		
+		List<DeviceRequestRemoval>  drr = drRepo.findAll();
+		
+		model.addAttribute("dr", drr);
+		
+		return "superAdmin/removedevice.html";
+	}
+	
+	@GetMapping("/deleteDevice/{id}")
+	public String deleteDevice(Model model, @PathVariable int id) {
+		
+		List<DeviceRequestRemoval>  drr = drRepo.findAll();
+		
+		model.addAttribute("dr", drr);
+		
+		ndRepo.deleteById(id);
+		
+		DeviceRequestRemoval dr = drRepo.findById(id)
+									.orElseThrow(() -> new IllegalArgumentException("Invalid ID: " + id));
+		
+		dr.setStatus("removed");
+		drRepo.save(dr);
+		
 		return "superAdmin/removedevice.html";
 	}
 	
