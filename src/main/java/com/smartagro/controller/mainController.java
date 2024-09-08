@@ -223,11 +223,10 @@ public class mainController {
 		ndRepo.deleteById(id);
 		
 		DeviceRequestRemoval dr = drRepo.findById(id)
-									.orElseThrow(() -> new IllegalArgumentException("Invalid ID: " + id));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid complaint ID: " + id));
 		
 		dr.setStatus("removed");
 		drRepo.save(dr);
-		
 		return "superAdmin/removedevice.html";
 	}
 	

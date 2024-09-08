@@ -4,14 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel</title>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    rel="stylesheet"
-  />
-  <link
-    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
     * {
@@ -35,8 +29,7 @@
       border-collapse: collapse;
       background-color: #fff;
     }
-    th,
-    td {
+    th, td {
       padding: 10px;
       text-align: left;
       border-bottom: 1px solid #ddd;
@@ -46,11 +39,15 @@
       font-weight: 600;
     }
     .approved-button {
-      background-color: #28a745; /* Green color */
+      background-color: #28a745;
       color: #fff;
       border: none;
       padding: 5px 10px;
       cursor: not-allowed;
+    }
+    .approve-button {
+      background-color: #007bff;
+      color: #fff;
     }
   </style>
 </head>
@@ -106,18 +103,11 @@
     <!-- Main Content -->
     <main class="flex-grow p-4 lg:p-8">
       <div class="max-w-6xl mx-auto">
-        <h1 class="text-3xl font-semibold text-gray-800 mb-4">
-          Engaged Users
-        </h1>
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Engaged Users</h1>
 
         <!-- Search Bar -->
         <div class="search-container">
-          <input
-            type="text"
-            id="searchInput"
-            class="search-input"
-            placeholder="Search by name..."
-          />
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by name..." />
         </div>
 
         <!-- Profile Table -->
@@ -126,29 +116,26 @@
             <tr>
               <th>ID</th>
               <th>User</th>
-              <th>Device id</th>
+              <th>Device ID</th>
               <th>Reason</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="profileTableBody">
-            <!-- Example Farmer Profiles -->
-            <tr th:each="dr:${dr}">
-                <td th:text="${dr.id}"></td>
-                <td th:text="${dr.name}"></td>
-                <td th:text="${dr.deviceid}"></td>
-                <td th:text="${dr.reason}"></td>
-                <td>
-                  <button
-                    class="approve-button bg-blue-500 text-white px-4 py-2 rounded"
-                    data-id="${dr.id}"
-                    onclick="approveAction(this)"
-                  >
-                    Approve
-                  </button>
-                </td>
+          <tbody>
+            <!-- Iterate through deviceRequests -->
+            <tr th:each="dr : ${dr}">
+              <td th:text="${dr.id}"></td>
+              <td th:text="${dr.name}"></td>
+              <td th:text="${dr.deviceid}"></td>
+              <td th:text="${dr.reason}"></td>
+              <td>
+                <button
+                  class="approve-button text-white px-4 py-2 rounded"
+                  th:onclick="'approveAction(this, ' + ${dr.id} + ')'">
+                  Approve
+                </button>
+              </td>
             </tr>
-            <!-- More profiles can be added here -->
           </tbody>
         </table>
       </div>
@@ -156,12 +143,16 @@
   </div>
 
   <script>
-    function approveAction(button) {
+    function approveAction(button, deviceId) {
       // Change button text and style
       button.textContent = 'Approved';
-      button.classList.remove('bg-blue-500');
+      button.classList.remove('approve-button');
       button.classList.add('approved-button');
       button.disabled = true; // Make the button read-only
+
+      // Simulate navigating to the delete URL
+      const deleteUrl = `/deleteDevice/${deviceId}`;
+      window.location.href = deleteUrl;
     }
   </script>
 </body>
